@@ -64,7 +64,7 @@ Desenvolver um sistema completo de **Reserva e Avaliação de Restaurantes**, ut
 5. **Cobertura de Testes**  
    - Monitoramos e mantivemos uma **alta cobertura de testes** utilizando ferramentas de **coverage**, assegurando que as principais funcionalidades estão devidamente protegidas contra falhas.
 
-### 🌐 Deploy
+## 🌐 Deploy
 
 Tipos de deploy escolhidos para o sistema:  
 - Local  
