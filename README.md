@@ -56,3 +56,16 @@ Tipos de deploy escolhidos para o sistema:
 - Local  
 - AWS ECS  
 - Heroku
+
+## 📊 Gerar Relatório de testes pelo Jacoco:
+
+1. No terminal, execute:  
+   ```bash
+   mvn clean test
+
+2. Depois execute:  
+   ```bash
+   mvn jacoco:report
+
+3. Depois acesse o diretório e abra o arquivo em seu navegador:
+   `target/site/jacoco/index.html`
