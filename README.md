@@ -1,35 +1,19 @@
 # 🍴 Tech Challenge: Sistema de Reserva e Avaliação de Restaurantes
 
 O **Tech Challenge** é um projeto integrador organizado pela FIAP que abrange os conhecimentos adquiridos em todas as disciplinas da fase. 
-
-## 🚀 Objetivo do Projeto
-
-Desenvolver um sistema completo de **Reserva e Avaliação de Restaurantes**, utilizando práticas de **Clean Architecture**, **Clean Code** e **Qualidade de Software**.
+O objetivo do projeto é a criação de um sistema completo de **Reserva e Avaliação de Restaurantes**, utilizando práticas de **Clean Architecture**, **Clean Code** e **Qualidade de Software**.
 
 ## 📝 Funcionalidades Básicas
 
 1. **Cadastro de Restaurantes**  
-   - Restaurantes podem se registrar no sistema com informações como:  
-     - Nome  
-     - Localização  
-     - Tipo de cozinha  
-     - Horários de funcionamento  
-     - Capacidade  
 
 2. **Reserva de Mesas**  
-   - Usuários podem realizar reservas para datas e horários específicos.
 
 3. **Avaliações e Comentários**  
-   - Após a visita, usuários podem avaliar os restaurantes e deixar comentários sobre suas experiências.
 
 4. **Busca de Restaurantes**  
-   - Pesquisa por:  
-     - Nome  
-     - Localização  
-     - Tipo de cozinha  
 
 5. **Gerenciamento de Reservas**  
-   - Restaurantes podem gerenciar reservas, atualizando o status das mesas.
 
 ## 🎯 O que foi aplicado neste projeto
 
@@ -43,6 +27,8 @@ Desenvolver um sistema completo de **Reserva e Avaliação de Restaurantes**, ut
 
 2. **Clean Code em Testes**  
    - Todo o código foi desenvolvido seguindo práticas de **Clean Code**, resultando em soluções legíveis, organizadas e consistentes, com atenção especial à qualidade dos testes.
+
+---
 
 ### 🧪 Qualidade de Software
 
