@@ -69,24 +69,26 @@ Tipos de deploy escolhidos para o sistema:
 
 3. Depois acesse o diretório e abra o arquivo em seu navegador:
    `target/site/jacoco/index.html`
-
+   
 ## 📂 Estrutura do projeto:
-
+```
 src/main/java/com/yourproject/
-├── domain/                  // Core/Domain Layer
-│   ├── entity/              // Entidades do sistema
-│   ├── exception/           // Exceções relacionadas ao domínio
+├── domain                  // Core/Domain Layer
+│   ├── entity              // Entidades do sistema
+│   └── exception           // Exceções relacionadas ao domínio
 │
-├── application/             // Application Layer
-│   ├── usecase/             // Casos de uso da aplicação
-│   └── gateway/             // Interfaces (ports) para comunicação entre o domínio e os adaptadores
+├── application             // Application Layer
+│   ├── usecase             // Casos de uso da aplicação
+│   └── gateway             // Interfaces (ports) para comunicação entre o domínio e os adaptadores
 │
-├── adapters/                // Adapters Layer
-│   ├── controller/          // Controladores (API, interfaces de usuário)
-│   ├── gateway/             // Implementações concretas para atender às portas definidas na camada de aplicação.
+├── adapters                // Adapters Layer
+│   ├── controller          // Controladores (API, interfaces de usuário)
+│   └── gateway             // Implementações concretas para atender às portas definidas na camada de aplicação.
 │
-├── infra/                   // Frameworks & Drivers Layer
-│   ├── config/              // Configurações de frameworks, injeção de dependência, etc.
-│   ├── database/            // Implementações específicas de banco de dados
-│   ├── repository/          // Repositórios concretos para persistência de dados.
-│   └── util/                // Classes utilitárias
+├── infra                   // Frameworks & Drivers Layer
+│   ├── config              // Configurações de frameworks, injeção de dependência, etc.
+│   ├── database            // Implementações específicas de banco de dados
+│   ├── repository          // Repositórios concretos para persistência de dados.
+│   └── util                // Classes utilitárias
+```
+
