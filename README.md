@@ -92,3 +92,22 @@ src/main/java/com/yourproject/
 │   └── util                // Classes utilitárias
 ```
 
+### ▶️ Como Rodar o Projeto
+
+1. Baixe as dependências do projeto: 
+ ```bash
+   mvn clean install
+```
+
+2. **Certifique-se de que o Docker está instalado em sua máquina.**
+   - Caso não tenha o Docker, [baixe e instale-o](https://www.docker.com/get-started).
+
+3. **Suba os containers com o Docker Compose:**
+
+```bash
+docker-compose up -d
+```
+
+Após a execução, a aplicação estará disponível em http://localhost:8080
+
+A documentação da API está disponível no Swagger, que pode ser acessada em: http://localhost:8080/swagger-ui/index.html
