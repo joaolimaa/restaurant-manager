@@ -1,4 +1,4 @@
-package fiap.restaurant_manager.domain.entity.restaurant;
+package fiap.restaurant_manager.domain.entities.restaurant;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;

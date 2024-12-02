@@ -1,4 +1,4 @@
-package fiap.restaurant_manager.infra.database;
+package fiap.restaurant_manager.infra.persistence.reserva;
 
 import fiap.restaurant_manager.domain.enums.StatusReserva;
 import lombok.AllArgsConstructor;
@@ -22,4 +22,12 @@ public class ReservaEntity {
     private LocalDateTime dataHora;
     private Integer quantidadePessoas;
     private StatusReserva status;
+
+    public ReservaEntity(Long restauranteId, Long usuarioId, LocalDateTime dataHora, Integer quantidadePessoas, StatusReserva status) {
+        this.restauranteId = restauranteId;
+        this.usuarioId = usuarioId;
+        this.dataHora = dataHora;
+        this.quantidadePessoas = quantidadePessoas;
+        this.status = status;
+    }
 }

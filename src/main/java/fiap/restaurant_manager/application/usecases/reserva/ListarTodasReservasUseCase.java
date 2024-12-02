@@ -1,7 +1,7 @@
 package fiap.restaurant_manager.application.usecases.reserva;
 
-import fiap.restaurant_manager.application.gateway.reserva.ReservaGateway;
-import fiap.restaurant_manager.domain.entity.reserva.Reserva;
+import fiap.restaurant_manager.application.gateways.reserva.ReservaGateway;
+import fiap.restaurant_manager.domain.entities.reserva.Reserva;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
