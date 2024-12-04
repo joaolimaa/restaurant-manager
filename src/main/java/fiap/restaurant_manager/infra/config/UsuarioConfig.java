@@ -9,6 +9,7 @@ import fiap.restaurant_manager.infra.database.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+
 @Configuration
 public class UsuarioConfig {
 

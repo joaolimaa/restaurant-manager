@@ -31,7 +31,7 @@ public class RepositorioUsuarioJpa implements RepositorioUsuario {
     }
 
     @Override
-    public Usuario alteraUsuario(String cpf, String email) {
+    public Usuario alteraUsuario(String cpf, String nome, String email) {
         UsuarioEntity entity = repositorio.findByCpf(cpf);
         entity.setEmail(email);
         repositorio.save(entity);

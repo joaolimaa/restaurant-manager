@@ -8,5 +8,5 @@ public interface RepositorioUsuario {
 
     Usuario cadastrarUsuario(Usuario usuario);
     List<Usuario> listarTodos();
-    Usuario alteraUsuario(String cpf, String email);
+    Usuario alteraUsuario(String cpf, String nome, String email);
 }
