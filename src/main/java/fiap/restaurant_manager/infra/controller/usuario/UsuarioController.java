@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/v1/api/usuarios")
 public class UsuarioController {
 
     private final CriarUsuario criarUsuario;
@@ -34,14 +34,14 @@ public class UsuarioController {
     }
 
     @PostMapping
-    @RequestMapping("/usuarios/alterar")
+    @RequestMapping("/alterar")
     public UsuarioDto alterarUsuario(@RequestBody UsuarioDto dto){
         Usuario usuarioSalvo = alterarUsuario.alterarUsuario(dto.cpf(), dto.nome(), dto.email());
         return new UsuarioDto(usuarioSalvo.getCpf(), usuarioSalvo.getNome(), usuarioSalvo.getEmail());
 
     }
 
-    @RequestMapping("/usuarios/deletar")
+    @RequestMapping("/deletar")
     public void deletarUsuario(@RequestBody UsuarioDto dto){
         deletarUsuario.deletarUsuario(dto.cpf(), dto.nome(), dto.email());
 
