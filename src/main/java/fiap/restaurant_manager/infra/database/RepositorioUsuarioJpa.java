@@ -31,11 +31,17 @@ public class RepositorioUsuarioJpa implements RepositorioUsuario {
     }
 
     @Override
-    public Usuario alteraUsuario(String cpf, String nome, String email) {
+    public Usuario alterarUsuario(String cpf, String nome, String email) {
         UsuarioEntity entity = repositorio.findByCpf(cpf);
         entity.setEmail(email);
         repositorio.save(entity);
         return mapper.toDomain(entity);
 
+    }
+
+    @Override
+    public void deletarUsuario(String cpf, String nome, String email) {
+        UsuarioEntity entity = repositorio.findByCpf(cpf);
+        repositorio.delete(entity);
     }
 }
