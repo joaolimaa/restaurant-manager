@@ -82,13 +82,12 @@ src/main/java/fiap/restaurant_manager/
 │   └── gateway             // Interfaces (ports) para comunicação entre o domínio e os adaptadores
 │
 ├── adapters                // Adapters Layer
-│   ├── controller          // Controladores (API, interfaces de usuário)
-│   └── gateway             // Implementações concretas para atender às portas definidas na camada de aplicação.
+│   ├── api                 // Endpoint REST (adaptador para o mundo externo)
+│   └── persistence         // Implementações dos repositórios (JPA, MongoDB, etc.)
 │
-├── infra                   // Frameworks & Drivers Layer
+├── infrastructure          // Frameworks & Drivers Layer
 │   ├── config              // Configurações de frameworks, injeção de dependência, etc.
-│   ├── database            // Implementações específicas de banco de dados
-│   ├── repository          // Repositórios concretos para persistência de dados.
+│   ├── database            // Configurações gerais de persistência (ex.: conexões, migrações)
 │   └── util                // Classes utilitárias
 ```
 
