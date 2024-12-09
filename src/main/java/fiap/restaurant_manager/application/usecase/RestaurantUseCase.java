@@ -1,7 +1,7 @@
 package fiap.restaurant_manager.application.usecase;
 
 import fiap.restaurant_manager.application.gateway.RestaurantGateway;
-import fiap.restaurant_manager.domain.entity.restaurant.RestaurantEntity;
+import fiap.restaurant_manager.domain.entity.RestaurantEntity;
 import fiap.restaurant_manager.domain.exception.InvalidAddressException;
 import fiap.restaurant_manager.domain.exception.RestaurantNotFoundException;
 import lombok.val;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static fiap.restaurant_manager.infrastructure.util.formatters.formatCNPJ;
 import static fiap.restaurant_manager.infrastructure.util.formatters.formatPostalCode;
 
 @Service
@@ -38,6 +39,7 @@ public class RestaurantUseCase {
         address.setNeighborhood(validationResponse.getBairro());
         address.setCity(validationResponse.getLocalidade());
         address.setState(validationResponse.getUf());
+        restaurant.setCnpj(formatCNPJ(restaurant.getCnpj()));
 
         return restaurantGateway.save(restaurant);
     }

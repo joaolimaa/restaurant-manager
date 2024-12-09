@@ -1,6 +1,6 @@
 package fiap.restaurant_manager.application.gateway;
 
-import fiap.restaurant_manager.domain.entity.restaurant.RestaurantEntity;
+import fiap.restaurant_manager.domain.entity.RestaurantEntity;
 
 import java.util.List;
 

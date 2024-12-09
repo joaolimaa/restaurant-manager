@@ -1,7 +1,7 @@
 package fiap.restaurant_manager.adapters.persistence;
 
 import fiap.restaurant_manager.application.gateway.RestaurantGateway;
-import fiap.restaurant_manager.domain.entity.restaurant.RestaurantEntity;
+import fiap.restaurant_manager.domain.entity.RestaurantEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 

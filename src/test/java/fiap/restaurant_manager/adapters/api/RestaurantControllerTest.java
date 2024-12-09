@@ -3,7 +3,7 @@ package fiap.restaurant_manager.adapters.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fiap.restaurant_manager.application.usecase.RestaurantUseCase;
-import fiap.restaurant_manager.domain.entity.restaurant.RestaurantEntity;
+import fiap.restaurant_manager.domain.entity.RestaurantEntity;
 import fiap.restaurant_manager.domain.valueObject.Address;
 import fiap.restaurant_manager.domain.valueObject.OperatingHours;
 import lombok.val;

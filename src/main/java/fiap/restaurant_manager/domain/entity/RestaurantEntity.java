@@ -1,4 +1,4 @@
-package fiap.restaurant_manager.domain.entity.restaurant;
+package fiap.restaurant_manager.domain.entity;
 
 import fiap.restaurant_manager.domain.valueObject.Address;
 import fiap.restaurant_manager.domain.valueObject.OperatingHours;
@@ -19,7 +19,6 @@ import java.util.List;
 @NoArgsConstructor
 @Data
 public class RestaurantEntity {
-
     @Id
     @Schema(description = "ID do restaurante", example = "1")
     private Long id;

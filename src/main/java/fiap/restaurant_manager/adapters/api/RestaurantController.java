@@ -1,7 +1,7 @@
 package fiap.restaurant_manager.adapters.api;
 
 import fiap.restaurant_manager.application.usecase.RestaurantUseCase;
-import fiap.restaurant_manager.domain.entity.restaurant.RestaurantEntity;
+import fiap.restaurant_manager.domain.entity.RestaurantEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
