@@ -73,22 +73,22 @@ Tipos de deploy escolhidos para o sistema:
 ## 📂 Estrutura do projeto:
 ```
 src/main/java/fiap/restaurant_manager/
-├── domain                  // Core/Domain Layer
-│   ├── entity              // Entidades do sistema
-│   └── exception           // Exceções relacionadas ao domínio
+├── adapters                // Adapters Layer
+│   ├── api                 // Endpoint REST (adaptador para o mundo externo)
+│   └── persistence         // Implementações dos repositórios (JPA, MongoDB, etc.)
 │
 ├── application             // Application Layer
 │   ├── usecase             // Casos de uso da aplicação
 │   └── gateway             // Interfaces (ports) para comunicação entre o domínio e os adaptadores
 │
-├── adapters                // Adapters Layer
-│   ├── controller          // Controladores (API, interfaces de usuário)
-│   └── gateway             // Implementações concretas para atender às portas definidas na camada de aplicação.
+├── domain                  // Core/Domain Layer
+│   ├── entity              // Entidades do sistema
+│   └── exception           // Exceções relacionadas ao domínio
+│   └── validator           // Notações personalizadas para validações
+│   └── valueObject         // Objetos de valor: Classes essenciais que não representam entidades de domínio.
 │
-├── infra                   // Frameworks & Drivers Layer
+├── infrastructure          // Frameworks & Drivers Layer
 │   ├── config              // Configurações de frameworks, injeção de dependência, etc.
-│   ├── database            // Implementações específicas de banco de dados
-│   ├── repository          // Repositórios concretos para persistência de dados.
 │   └── util                // Classes utilitárias
 ```
 
