@@ -72,7 +72,7 @@ Tipos de deploy escolhidos para o sistema:
    
 ## 📂 Estrutura do projeto:
 ```
-src/main/java/com/yourproject/
+src/main/java/fiap/restaurant_manager/
 ├── domain                  // Core/Domain Layer
 │   ├── entity              // Entidades do sistema
 │   └── exception           // Exceções relacionadas ao domínio
