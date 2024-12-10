@@ -5,7 +5,7 @@ import fiap.restaurant_manager.adapters.persistence.repositoryImpl.RestaurantRep
 import fiap.restaurant_manager.adapters.persistence.repositoryImpl.mapper.RestaurantEntityMapper;
 import fiap.restaurant_manager.application.gateways.RestaurantGateway;
 import fiap.restaurant_manager.application.usecases.ViaCepUseCase;
-import fiap.restaurant_manager.application.usecases.restaurantUseCases.RestaurantUseCase;
+import fiap.restaurant_manager.application.usecases.RestaurantUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;

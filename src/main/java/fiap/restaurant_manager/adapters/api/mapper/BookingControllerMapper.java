@@ -2,12 +2,12 @@ package fiap.restaurant_manager.adapters.api.mapper;
 
 
 import fiap.restaurant_manager.adapters.api.dto.BookingDTO;
-import fiap.restaurant_manager.domain.entities.Book;
+import fiap.restaurant_manager.domain.entities.Booking;
 
 public class BookingControllerMapper {
 
-    public Book toReserva(BookingDTO reserva) {
-        return new Book(
+    public Booking toReserva(BookingDTO reserva) {
+        return new Booking(
                 reserva.restauranteId(),
                 reserva.usuarioId(),
                 reserva.dataHora(),
@@ -15,13 +15,13 @@ public class BookingControllerMapper {
                 reserva.status());
     }
 
-    public BookingDTO toDTO(Book book) {
+    public BookingDTO toDTO(Booking booking) {
         return new BookingDTO(
-                book.getRestauranteId(),
-                book.getUsuarioId(),
-                book.getDataHora(),
-                book.getQuantidadePessoas(),
-                book.getStatus()
+                booking.getRestauranteId(),
+                booking.getUsuarioId(),
+                booking.getDataHora(),
+                booking.getQuantidadePessoas(),
+                booking.getStatus()
         );
     }
 

@@ -1,8 +1,6 @@
 package fiap.restaurant_manager.application.gateways;
 
-import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.domain.entities.Restaurant;
-
 import java.util.List;
 
 public interface RestaurantGateway {

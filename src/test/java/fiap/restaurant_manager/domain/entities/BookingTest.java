@@ -12,7 +12,7 @@ class BookingTest {
 
     @Test
     void deveCriarReservaComDadosValidos() {
-        assertDoesNotThrow(() -> new Book(
+        assertDoesNotThrow(() -> new Booking(
                 1L,
                 1L,
                 LocalDateTime.now().plusDays(1),
@@ -26,7 +26,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeRestauranteIdForNulo() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     null,
                     1L,
                     LocalDateTime.now().plusDays(1),
@@ -37,7 +37,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeRestauranteIdForNegativo() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     -1L,
                     1L,
                     LocalDateTime.now().plusDays(1),
@@ -52,7 +52,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeUsuarioIdForNulo() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     null,
                     LocalDateTime.now().plusDays(1),
@@ -63,7 +63,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeUsuarioIdForNegativo() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     -1L,
                     LocalDateTime.now().plusDays(1),
@@ -78,7 +78,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeDataHoraForNula() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     1L,
                     null,
@@ -89,7 +89,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeDataHoraForNoPassado() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     1L,
                     LocalDateTime.now().minusDays(1),
@@ -104,7 +104,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeQuantidadeForNegativa() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     1L,
                     LocalDateTime.now().plusDays(1),
@@ -119,7 +119,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeStatusForNulo() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     1L,
                     LocalDateTime.now().plusDays(1),
@@ -130,7 +130,7 @@ class BookingTest {
 
         @Test
         void deveLancarExcecaoSeStatusForInvalido() {
-            assertThrows(IllegalArgumentException.class, () -> new Book(
+            assertThrows(IllegalArgumentException.class, () -> new Booking(
                     1L,
                     1L,
                     LocalDateTime.now().plusDays(1),

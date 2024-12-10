@@ -3,7 +3,7 @@ package fiap.restaurant_manager.adapters.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fiap.restaurant_manager.adapters.api.controllers.RestaurantController;
-import fiap.restaurant_manager.application.usecases.restaurantUseCases.RestaurantUseCase;
+import fiap.restaurant_manager.application.usecases.RestaurantUseCase;
 import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
 import fiap.restaurant_manager.adapters.persistence.entities.OperatingHoursEntity;
 import fiap.restaurant_manager.domain.entities.Restaurant;

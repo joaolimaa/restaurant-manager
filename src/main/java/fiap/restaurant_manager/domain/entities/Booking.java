@@ -6,14 +6,14 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class Book {
+public class Booking {
     private Long restauranteId;
     private Long usuarioId;
     private LocalDateTime dataHora;
     private Integer quantidadePessoas;
     private StatusBooking status;
 
-    public Book(Long restauranteId, Long usuarioId, LocalDateTime dataHora, Integer quantidadePessoas, StatusBooking status) {
+    public Booking(Long restauranteId, Long usuarioId, LocalDateTime dataHora, Integer quantidadePessoas, StatusBooking status) {
 
         realizaValidacoes(restauranteId, usuarioId, dataHora, quantidadePessoas, status);
 

@@ -6,7 +6,7 @@ import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository
 import fiap.restaurant_manager.adapters.persistence.repositoryImpl.BookingRepositoryGateway;
 import fiap.restaurant_manager.adapters.persistence.repositoryImpl.mapper.BookingEntityMapper;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
-import fiap.restaurant_manager.application.usecases.bookingUseCases.BookingUseCase;
+import fiap.restaurant_manager.application.usecases.BookingUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 

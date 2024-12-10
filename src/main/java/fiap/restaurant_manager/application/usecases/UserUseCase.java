@@ -1,4 +1,4 @@
-package fiap.restaurant_manager.application.usecases.userUseCases;
+package fiap.restaurant_manager.application.usecases;
 
 import fiap.restaurant_manager.application.gateways.UserGateway;
 import fiap.restaurant_manager.domain.entities.User;

@@ -1,22 +1,22 @@
 package fiap.restaurant_manager.adapters.persistence.repositoryImpl.mapper;
 
 
-import fiap.restaurant_manager.domain.entities.Book;
-import fiap.restaurant_manager.adapters.persistence.entities.BookEntity;
+import fiap.restaurant_manager.domain.entities.Booking;
+import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 
 public class BookingEntityMapper {
 
-    public BookEntity toEntity(Book bookDomain) {
-        return new BookEntity(
-                bookDomain.getRestauranteId(),
-                bookDomain.getUsuarioId(),
-                bookDomain.getDataHora(),
-                bookDomain.getQuantidadePessoas(),
-                bookDomain.getStatus());
+    public BookingEntity toEntity(Booking bookingDomain) {
+        return new BookingEntity(
+                bookingDomain.getRestauranteId(),
+                bookingDomain.getUsuarioId(),
+                bookingDomain.getDataHora(),
+                bookingDomain.getQuantidadePessoas(),
+                bookingDomain.getStatus());
     }
 
-    public Book toDomain(BookEntity reserva) {
-        return new Book(reserva.getRestauranteId(),
+    public Booking toDomain(BookingEntity reserva) {
+        return new Booking(reserva.getRestauranteId(),
                 reserva.getUsuarioId(),
                 reserva.getDataHora(),
                 reserva.getQuantidadePessoas(),

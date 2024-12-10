@@ -2,8 +2,8 @@ package fiap.restaurant_manager.adapters.api.controllers;
 
 import fiap.restaurant_manager.adapters.api.dto.BookingDTO;
 import fiap.restaurant_manager.adapters.api.mapper.BookingControllerMapper;
-import fiap.restaurant_manager.application.usecases.bookingUseCases.BookingUseCase;
-import fiap.restaurant_manager.domain.entities.Book;
+import fiap.restaurant_manager.application.usecases.BookingUseCase;
+import fiap.restaurant_manager.domain.entities.Booking;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -25,8 +25,8 @@ public class BookingController {
 
     @PutMapping("/{id}")
     public BookingDTO update(@PathVariable String id, @Valid @RequestBody BookingDTO request) {
-        Book book = mapper.toReserva(request);
-        return mapper.toDTO(bookingUseCase.atualizaReserva(book));
+        Booking booking = mapper.toReserva(request);
+        return mapper.toDTO(bookingUseCase.atualizaReserva(booking));
     }
 
     @PutMapping("/{id}/statusReserva")

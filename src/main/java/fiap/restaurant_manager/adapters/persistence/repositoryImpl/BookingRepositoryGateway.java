@@ -2,11 +2,11 @@ package fiap.restaurant_manager.adapters.persistence.repositoryImpl;
 
 import fiap.restaurant_manager.adapters.persistence.repositoryImpl.mapper.BookingEntityMapper;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
-import fiap.restaurant_manager.domain.entities.Book;
+import fiap.restaurant_manager.domain.entities.Booking;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import fiap.restaurant_manager.domain.exception.ExpectationFailedException;
 import fiap.restaurant_manager.domain.exception.NotFoundException;
-import fiap.restaurant_manager.adapters.persistence.entities.BookEntity;
+import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,45 +20,45 @@ public class BookingRepositoryGateway implements BookingGateway {
 
     @Transactional
     @Override
-    public Book atualizaReserva(Book book) {
-        BookEntity bookEntity = reservaMapper.toEntity(book);
+    public Booking atualizaReserva(Booking booking) {
+        BookingEntity bookingEntity = reservaMapper.toEntity(booking);
 
-        return reservaMapper.toDomain(bookingRepository.save(bookEntity));
+        return reservaMapper.toDomain(bookingRepository.save(bookingEntity));
     }
 
     @Override
-    public Collection<Book> listarTodos() {
+    public Collection<Booking> listarTodos() {
         return bookingRepository.findAll().stream().map(reservaMapper::toDomain).toList();
     }
 
     @Transactional
     @Override
-    public Book findById(Long id){
+    public Booking findById(Long id){
 
-        BookEntity bookEntity = bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("Não foi possível encontrar a zona com o ID: " + id + "."));
+        BookingEntity bookingEntity = bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("Não foi possível encontrar a zona com o ID: " + id + "."));
 
-        return reservaMapper.toDomain(bookEntity);
+        return reservaMapper.toDomain(bookingEntity);
     }
 
     @Transactional
     @Override
-    public Book atualizarStatusReserva(Long id, StatusBooking statusBooking){
-        Book book = findById(id);
-        StatusBooking statusBookingAtual = book.getStatus();
-        BookEntity bookEntity = reservaMapper.toEntity(book);
+    public Booking atualizarStatusReserva(Long id, StatusBooking statusBooking){
+        Booking booking = findById(id);
+        StatusBooking statusBookingAtual = booking.getStatus();
+        BookingEntity bookingEntity = reservaMapper.toEntity(booking);
 
         if(statusBookingAtual.equals(StatusBooking.CONFIRMADA) || statusBookingAtual.equals(StatusBooking.PENDENTE)){
 
-            bookEntity.setStatus(statusBooking);
+            bookingEntity.setStatus(statusBooking);
 
-            validaStatus(bookEntity);
+            validaStatus(bookingEntity);
 
-            return reservaMapper.toDomain(bookingRepository.save(bookEntity));
+            return reservaMapper.toDomain(bookingRepository.save(bookingEntity));
         }
         throw new ExpectationFailedException("Essa reserva não pode ser atualizada, pois já está cancelada.");
     }
 
-    private void validaStatus(BookEntity reserva) {
+    private void validaStatus(BookingEntity reserva) {
         try {
             StatusBooking.valueOf(String.valueOf(reserva.getStatus()));
         } catch (Exception e) {

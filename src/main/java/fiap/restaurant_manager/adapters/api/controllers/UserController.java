@@ -2,7 +2,7 @@ package fiap.restaurant_manager.adapters.api.controllers;
 
 import fiap.restaurant_manager.adapters.api.dto.UserDTO;
 import fiap.restaurant_manager.adapters.api.mapper.UserControllerMapper;
-import fiap.restaurant_manager.application.usecases.userUseCases.UserUseCase;
+import fiap.restaurant_manager.application.usecases.UserUseCase;
 import fiap.restaurant_manager.adapters.persistence.entities.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
