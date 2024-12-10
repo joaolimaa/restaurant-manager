@@ -2,10 +2,11 @@ package fiap.restaurant_manager.adapters.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fiap.restaurant_manager.application.usecase.RestaurantUseCase;
-import fiap.restaurant_manager.domain.entity.RestaurantEntity;
-import fiap.restaurant_manager.domain.valueObject.Address;
-import fiap.restaurant_manager.domain.valueObject.OperatingHours;
+import fiap.restaurant_manager.adapters.api.controllers.RestaurantController;
+import fiap.restaurant_manager.application.usecases.restaurantUseCases.RestaurantUseCase;
+import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
+import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
+import fiap.restaurant_manager.adapters.persistence.entities.OperatingHoursEntity;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -247,10 +248,10 @@ public class RestaurantControllerTest {
         restaurantEntityMock = new RestaurantEntity();
         restaurantEntityMock.setId(1L);
         restaurantEntityMock.setName("Restaurante FIAP");
-        restaurantEntityMock.setAddress(buildMockAddress());
+        restaurantEntityMock.setAddressEntity(buildMockAddress());
         restaurantEntityMock.setKitchenType("Sanduicheria");
         restaurantEntityMock.setCnpj("");
-        restaurantEntityMock.setOperatingHours(Collections.singletonList(buildMockOperatingHours()));
+        restaurantEntityMock.setOperatingHourEntities(Collections.singletonList(buildMockOperatingHours()));
         restaurantEntityMock.setCapacity(100);
     }
 
@@ -259,8 +260,8 @@ public class RestaurantControllerTest {
         return objectMapper.writeValueAsString(objectEntity);
     }
 
-    private Address buildMockAddress() {
-        val address = new Address();
+    private AddressEntity buildMockAddress() {
+        val address = new AddressEntity();
         address.setPostalCode("01153-000");
         address.setCity("São Paulo");
         address.setState("SP");
@@ -270,8 +271,8 @@ public class RestaurantControllerTest {
         return address;
     }
 
-    private OperatingHours buildMockOperatingHours() {
-        val operatingHours = new OperatingHours();
+    private OperatingHoursEntity buildMockOperatingHours() {
+        val operatingHours = new OperatingHoursEntity();
         operatingHours.setDayOfWeek(DayOfWeek.MONDAY);
         operatingHours.setStartTime(ZonedDateTime.parse("2024-11-27T09:00:00+00:00"));
         operatingHours.setEndTime(ZonedDateTime.parse("2024-11-27T17:00:00+00:00"));
