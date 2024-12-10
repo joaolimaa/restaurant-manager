@@ -1,6 +1,5 @@
-package fiap.restaurant_manager.domain.entities.reserva;
+package fiap.restaurant_manager.domain.entities;
 
-import fiap.restaurant_manager.domain.entities.Book;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDateTime;
@@ -9,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 
-class BookTest {
+class BookingTest {
 
     @Test
     void deveCriarReservaComDadosValidos() {

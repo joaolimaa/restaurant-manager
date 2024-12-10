@@ -1,20 +1,23 @@
 services:
-  mongo:
-    container_name: mongodb
-    image: mongo:7.0
+  postgres:
+    container_name: postgres
+    image: postgres:latest
     restart: always
+    ports:
+      - "5432:5432"
     environment:
-      MONGO_INITDB_DATABASE: restaurant-manager
+        POSTGRES_USER: root
+        POSTGRES_PASSWORD: toor
+        POSTGRES_DB: restaurant-manager
     networks:
       - restaurant-manager-network
     volumes:
-      - restaurant-manager-data:/data/db
+      - restaurant-manager-data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD","mongosh", "--eval", "db.adminCommand('ping')"]
-      interval: 5s
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
       timeout: 5s
-      retries: 3
-      start_period: 5s
+      retries: 5
 
   app:
     container_name: restaurant-manager
@@ -24,10 +27,12 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      mongo:
+      postgres:
         condition: service_healthy
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/restaurant-manager
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/restaurant-manager
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: toor
     networks:
       - restaurant-manager-network
 

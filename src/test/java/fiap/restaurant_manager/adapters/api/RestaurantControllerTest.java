@@ -4,9 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fiap.restaurant_manager.adapters.api.controllers.RestaurantController;
 import fiap.restaurant_manager.application.usecases.restaurantUseCases.RestaurantUseCase;
-import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
 import fiap.restaurant_manager.adapters.persistence.entities.OperatingHoursEntity;
+import fiap.restaurant_manager.domain.entities.Restaurant;
 import lombok.val;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -40,15 +40,15 @@ public class RestaurantControllerTest {
     @InjectMocks
     private RestaurantController restaurantController;
 
-    private RestaurantEntity restaurantEntityMock;
+    private Restaurant RestaurantMock;
 
     private String restaurantJSON;
 
     @BeforeEach
     public void setUp() throws JsonProcessingException {
         MockitoAnnotations.openMocks(this);
-        buildMockRestaurantEntity();
-        restaurantJSON = formatRestaurantEntityToJSON(restaurantEntityMock);
+        buildMockRestaurant();
+        restaurantJSON = formatRestaurantToJSON(RestaurantMock);
     }
 
     /**
@@ -58,7 +58,7 @@ public class RestaurantControllerTest {
     @Test
     public void testFindAllRestaurants_Success() throws Exception {
         // Arrange: Simula a listagem de todos os restaurantes
-        when(restaurantUseCase.findAllRestaurants()).thenReturn(Collections.singletonList(restaurantEntityMock));
+        when(restaurantUseCase.findAllRestaurants()).thenReturn(Collections.singletonList(RestaurantMock));
 
         mockMvc.perform(get("/restaurants"))
                 .andExpect(status().isOk())  // status da resposta: 200
@@ -84,7 +84,7 @@ public class RestaurantControllerTest {
     @Test
     public void testGetRestaurantById_Success() throws Exception {
         // Arrange: Simula o retorno de um restaurante com o id 1
-        when(restaurantUseCase.findRestaurantById(1L)).thenReturn(restaurantEntityMock);
+        when(restaurantUseCase.findRestaurantById(1L)).thenReturn(RestaurantMock);
 
         mockMvc.perform(get("/restaurants/{id}", 1L))
                 .andExpect(status().isOk())  // status da resposta: 200
@@ -120,7 +120,7 @@ public class RestaurantControllerTest {
     @Test
     public void testCreateRestaurant_Success() throws Exception {
         // Arrange: Simula os dados de um restaurante válido e o retorno do use case
-        when(restaurantUseCase.createRestaurant(any(RestaurantEntity.class))).thenReturn(restaurantEntityMock);
+        when(restaurantUseCase.createRestaurant(any(Restaurant.class))).thenReturn(RestaurantMock);
 
         mockMvc.perform(post("/restaurants")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -133,7 +133,7 @@ public class RestaurantControllerTest {
     @Test
     public void testCreateRestaurant_BadRequest() throws Exception {
         // Arrange: Simula dados inválidos
-        val invalidJSON = formatRestaurantEntityToJSON(new RestaurantEntity());
+        val invalidJSON = formatRestaurantToJSON(new Restaurant());
 
         mockMvc.perform(post("/restaurants")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -145,7 +145,7 @@ public class RestaurantControllerTest {
     @Test
     public void testCreateRestaurant_InternalServerError() throws Exception {
         // Arrange: Simula uma exceção interna durante a criação do restaurante
-        when(restaurantUseCase.createRestaurant(any(RestaurantEntity.class)))
+        when(restaurantUseCase.createRestaurant(any(Restaurant.class)))
                 .thenThrow(new RuntimeException("Erro interno"));
 
         mockMvc.perform(post("/restaurants")
@@ -163,7 +163,7 @@ public class RestaurantControllerTest {
     @Test
     public void testUpdateRestaurant_Success() throws Exception {
         // Arrange: Simula o restaurante com id 1 sendo atualizado
-        when(restaurantUseCase.updateRestaurant(anyLong(), any(RestaurantEntity.class))).thenReturn(restaurantEntityMock);
+        when(restaurantUseCase.updateRestaurant(anyLong(), any(Restaurant.class))).thenReturn(RestaurantMock);
 
         mockMvc.perform(put("/restaurants/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -176,7 +176,7 @@ public class RestaurantControllerTest {
     @Test
     public void testUpdateRestaurant_BadRequest() throws Exception {
         // Arrange: Simula um restaurante inválido com dados faltando ou incorretos
-        val invalidJSON = formatRestaurantEntityToJSON(new RestaurantEntity());
+        val invalidJSON = formatRestaurantToJSON(new Restaurant());
 
         mockMvc.perform(put("/restaurants/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -188,7 +188,7 @@ public class RestaurantControllerTest {
     @Test
     public void testUpdateRestaurant_NotFound() throws Exception {
         // Arrange: Simula que o restaurante com id 1 não existe
-        when(restaurantUseCase.updateRestaurant(anyLong(), any(RestaurantEntity.class))).thenReturn(null);
+        when(restaurantUseCase.updateRestaurant(anyLong(), any(Restaurant.class))).thenReturn(null);
 
         mockMvc.perform(put("/restaurants/{id}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -200,7 +200,7 @@ public class RestaurantControllerTest {
     @Test
     public void testUpdateRestaurant_InternalServerError() throws Exception {
         // Arrange: Simula que ocorre uma exceção interna durante a execução
-        when(restaurantUseCase.updateRestaurant(anyLong(), any(RestaurantEntity.class)))
+        when(restaurantUseCase.updateRestaurant(anyLong(), any(Restaurant.class)))
                 .thenThrow(new RuntimeException("Erro interno"));
 
         mockMvc.perform(put("/restaurants/{id}", 1L)
@@ -244,18 +244,18 @@ public class RestaurantControllerTest {
                 .andExpect(content().string("Erro interno do servidor"));
     }
 
-    private void buildMockRestaurantEntity() {
-        restaurantEntityMock = new RestaurantEntity();
-        restaurantEntityMock.setId(1L);
-        restaurantEntityMock.setName("Restaurante FIAP");
-        restaurantEntityMock.setAddressEntity(buildMockAddress());
-        restaurantEntityMock.setKitchenType("Sanduicheria");
-        restaurantEntityMock.setCnpj("");
-        restaurantEntityMock.setOperatingHourEntities(Collections.singletonList(buildMockOperatingHours()));
-        restaurantEntityMock.setCapacity(100);
+    private void buildMockRestaurant() {
+        RestaurantMock = new Restaurant();
+        //RestaurantMock.setId(1L);
+        RestaurantMock.setName("Restaurante FIAP");
+        RestaurantMock.setAddressEntity(buildMockAddress());
+        RestaurantMock.setKitchenType("Sanduicheria");
+        RestaurantMock.setCnpj("");
+        RestaurantMock.setOperatingHourEntities(Collections.singletonList(buildMockOperatingHours()));
+        RestaurantMock.setCapacity(100);
     }
 
-    private String formatRestaurantEntityToJSON(RestaurantEntity objectEntity) throws JsonProcessingException {
+    private String formatRestaurantToJSON(Restaurant objectEntity) throws JsonProcessingException {
         val objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(objectEntity);
     }
