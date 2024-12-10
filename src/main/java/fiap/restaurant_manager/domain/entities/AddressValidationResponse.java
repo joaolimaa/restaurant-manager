@@ -12,6 +12,4 @@ public class AddressValidationResponse {
     private String localidade;
     private String uf;
     private Boolean erro;
-
-
 }

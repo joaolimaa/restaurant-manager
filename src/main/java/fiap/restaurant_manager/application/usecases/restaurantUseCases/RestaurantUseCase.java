@@ -8,9 +8,7 @@ import java.util.List;
 
 @AllArgsConstructor
 public class RestaurantUseCase {
-
     private final RestaurantGateway restaurantGateway;
-
 
     public List<Restaurant> findAllRestaurants() {
         return restaurantGateway.findAllRestaurants();

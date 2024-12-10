@@ -22,10 +22,8 @@ import java.util.List;
 @RequestMapping("/api/restaurants")
 @RequiredArgsConstructor
 public class RestaurantController {
-
     private final RestaurantUseCase restaurantUseCase;
     private final RestaurantControllerMapper mapper;
-
 
     @Operation(summary = "Coleta todos os restaurantes")
     @ApiResponses({

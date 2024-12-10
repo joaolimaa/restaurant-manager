@@ -6,7 +6,6 @@ import fiap.restaurant_manager.domain.entities.User;
 
 public class UserEntityMapper {
 
-
     public UserEntity toEntity(User userDomain) {
         return new UserEntity(
                 userDomain.getNome(),

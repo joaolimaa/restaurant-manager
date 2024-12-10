@@ -1,6 +1,5 @@
 package fiap.restaurant_manager.adapters.persistence.repositoryImpl;
 
-
 import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.adapters.persistence.repository.RestaurantRepository;
 import fiap.restaurant_manager.adapters.persistence.repositoryImpl.mapper.RestaurantEntityMapper;
@@ -10,7 +9,6 @@ import fiap.restaurant_manager.domain.entities.Restaurant;
 import fiap.restaurant_manager.domain.exception.InvalidAddressException;
 import fiap.restaurant_manager.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -18,10 +16,8 @@ import java.util.List;
 import static fiap.restaurant_manager.infrastructure.util.formatters.formatCNPJ;
 import static fiap.restaurant_manager.infrastructure.util.formatters.formatPostalCode;
 
-
 @AllArgsConstructor
 public class RestaurantRepositoryGateway implements RestaurantGateway {
-
     private final RestaurantRepository restaurantRepository;
     private final RestaurantEntityMapper restaurantMapper;
     private final ViaCepUseCase viaCepUseCase;
@@ -76,5 +72,4 @@ public class RestaurantRepositoryGateway implements RestaurantGateway {
             return false;
         }
     }
-
 }

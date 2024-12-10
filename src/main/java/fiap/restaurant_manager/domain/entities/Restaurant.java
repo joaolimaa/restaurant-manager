@@ -12,7 +12,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Restaurant {
-
     private String name;
     private AddressEntity addressEntity;
     private String kitchenType;

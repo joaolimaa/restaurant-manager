@@ -31,5 +31,4 @@ public class RestaurantSetting {
     }
 
     //TODO: Colocar todos os UsesCases
-
 }

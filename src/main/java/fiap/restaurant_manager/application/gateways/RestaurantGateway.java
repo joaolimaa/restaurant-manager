@@ -6,7 +6,6 @@ import fiap.restaurant_manager.domain.entities.Restaurant;
 import java.util.List;
 
 public interface RestaurantGateway {
-
     List<Restaurant> findAllRestaurants();
     Restaurant findById(Long id);
     Restaurant save(Restaurant restaurant);

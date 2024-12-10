@@ -10,5 +10,4 @@ public record RestaurantDTO(String name,
                             String kitchenType,
                             String cnpj,
                             List<OperatingHoursEntity> operatingHourEntities,
-                            int capacity) {
-}
+                            int capacity) {}

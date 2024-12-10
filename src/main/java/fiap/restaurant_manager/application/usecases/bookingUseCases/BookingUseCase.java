@@ -7,10 +7,8 @@ import lombok.AllArgsConstructor;
 
 import java.util.Collection;
 
-
 @AllArgsConstructor
 public class BookingUseCase {
-
     private final BookingGateway bookingGateway;
 
     public Book atualizaReserva(Book book) {

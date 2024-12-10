@@ -9,15 +9,12 @@ import fiap.restaurant_manager.domain.exception.NotFoundException;
 import fiap.restaurant_manager.adapters.persistence.entities.BookEntity;
 import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 
-
 @AllArgsConstructor
 public class BookingRepositoryGateway implements BookingGateway {
-
     private final BookingRepository bookingRepository;
     private final BookingEntityMapper reservaMapper;
 

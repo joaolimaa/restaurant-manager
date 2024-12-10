@@ -8,5 +8,4 @@ public record BookingDTO(Long restauranteId,
                          Long usuarioId,
                          LocalDateTime dataHora,
                          Integer quantidadePessoas,
-                         StatusBooking status) {
-}
+                         StatusBooking status) {}

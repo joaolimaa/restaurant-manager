@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-
 @RestController
 @RequestMapping("/v1/api/reserva")
 @RequiredArgsConstructor
 public class BookingController {
-
     private final BookingUseCase bookingUseCase;
     private final BookingControllerMapper mapper;
+
     @GetMapping
     public Collection<BookingDTO> listarTodasAsReservas() {
         return bookingUseCase.listaTodasAsReservas().stream().map(mapper::toDTO).toList();

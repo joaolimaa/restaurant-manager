@@ -6,7 +6,6 @@ import fiap.restaurant_manager.domain.entities.Restaurant;
 
 public class RestaurantControllerMapper {
 
-
     public Restaurant toRestaurant(RestaurantDTO restaurant) {
         return new Restaurant(
                 restaurant.name(),

@@ -7,17 +7,14 @@ import fiap.restaurant_manager.application.gateways.UserGateway;
 import fiap.restaurant_manager.domain.entities.User;
 import fiap.restaurant_manager.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-
-
 @AllArgsConstructor
 public class UserRepositoryGateway implements UserGateway {
-
     private final UserRepository userRepository;
     private final UserEntityMapper mapper;
+
     @Override
     public User findById(Long id) {
         UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new NotFoundException("Não foi possível encontrar a zona com o ID: " + id + "."));

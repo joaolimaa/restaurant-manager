@@ -27,5 +27,4 @@ public class UserSetting {
     }
 
     //TODO: Colocar todos os UsesCases
-
 }

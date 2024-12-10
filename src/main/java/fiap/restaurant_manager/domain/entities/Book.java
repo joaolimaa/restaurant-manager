@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 
 @Data
 public class Book {
-
     private Long restauranteId;
     private Long usuarioId;
     private LocalDateTime dataHora;
