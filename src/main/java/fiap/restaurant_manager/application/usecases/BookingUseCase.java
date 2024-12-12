@@ -1,29 +1,34 @@
 package fiap.restaurant_manager.application.usecases;
 
+import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
-import fiap.restaurant_manager.domain.entities.Booking;
-import fiap.restaurant_manager.domain.enums.StatusBooking;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class BookingUseCase {
     private final BookingGateway bookingGateway;
 
-    public Booking atualizaReserva(Booking booking) {
-        return bookingGateway.atualizaReserva(booking);
+    public Collection<BookingEntity> findAllBooking() {
+        return bookingGateway.findAll();
     }
 
-    public Booking atualizaStatusReserva(Long id, StatusBooking statusBooking) {
-        return bookingGateway.atualizarStatusReserva(id, statusBooking);
+    public void createBooking(BookingEntity bookingEntity) {
+        bookingGateway.save(bookingEntity);
     }
 
-    public Booking findById(Long id) {
+    public void updateBooking(Long id, BookingEntity bookingEntity) {
+        findBookingById(id);
+        bookingGateway.save(bookingEntity);
+    }
+
+    public void deleteBooking(Long id) {
+        bookingGateway.deleteById(id);
+    }
+
+    public Optional<BookingEntity> findBookingById(Long id) {
         return bookingGateway.findById(id);
-    }
-
-    public Collection<Booking> listaTodasAsReservas() {
-        return bookingGateway.listarTodos();
     }
 }

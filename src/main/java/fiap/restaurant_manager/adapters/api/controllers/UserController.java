@@ -31,8 +31,8 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     @GetMapping
-    public List<UserDTO> findAllRestaurants() {
-        return userUseCase.listarTodos().stream().map(mapper::toDTO).toList();
+    public List<UserDTO> findAllUsers() {
+        return userUseCase.findAllUsers().stream().map(mapper::toDTO).toList();
     }
 
     @Operation(summary = "Procura um usuário pelo ID")
@@ -43,7 +43,7 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findRestaurantById(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> findUserById(@PathVariable Long id) {
         val user = userUseCase.findUserById(id);
         return user != null ? ResponseEntity.ok(mapper.toDTO(user)) : ResponseEntity.notFound().build();
     }
@@ -57,7 +57,7 @@ public class UserController {
     })
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO user) {
-        val createdUser = userUseCase.cadastrarUsuario(mapper.toUser(user));
+        val createdUser = userUseCase.createUser(mapper.toUser(user));
         return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(createdUser));
     }
 
@@ -71,7 +71,7 @@ public class UserController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO user) {
-        val updatedUser = userUseCase.alterarUsuario(id, mapper.toUser(user));
+        val updatedUser = userUseCase.updateUser(id, mapper.toUser(user));
         return updatedUser != null ? ResponseEntity.ok(mapper.toDTO(updatedUser)) : ResponseEntity.notFound().build();
     }
 
@@ -83,7 +83,7 @@ public class UserController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        val isDeleted = userUseCase.deletarUsuario(id);
+        val isDeleted = userUseCase.deleteUser(id);
         return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
     }
 }

@@ -1,39 +1,38 @@
 package fiap.restaurant_manager.adapters.persistence.entities;
 
 import fiap.restaurant_manager.domain.enums.StatusBooking;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-
 
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "booking")
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@Table(name = "Booking")
 public class BookingEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long restauranteId;
-    private Long usuarioId;
-    private LocalDateTime dataHora;
-    private Integer quantidadePessoas;
+
+    private Long restaurantId;
+
+    private Long userId;
+
+    private LocalDateTime bookingDate;
+
+    private Integer peopleQuantity;
+
     private StatusBooking status;
 
-    public BookingEntity(Long restauranteId, Long usuarioId, LocalDateTime dataHora, Integer quantidadePessoas, StatusBooking status) {
-        this.restauranteId = restauranteId;
-        this.usuarioId = usuarioId;
-        this.dataHora = dataHora;
-        this.quantidadePessoas = quantidadePessoas;
+    public BookingEntity(Long restaurantId, Long userId, LocalDateTime bookingDate, Integer peopleQuantity, StatusBooking status) {
+        this.restaurantId = restaurantId;
+        this.userId = userId;
+        this.bookingDate = bookingDate;
+        this.peopleQuantity = peopleQuantity;
         this.status = status;
     }
 }

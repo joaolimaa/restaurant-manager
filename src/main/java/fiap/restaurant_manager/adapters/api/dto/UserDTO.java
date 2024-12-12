@@ -1,5 +1,8 @@
 package fiap.restaurant_manager.adapters.api.dto;
 
-public record UserDTO(String name,
+import org.springframework.data.annotation.ReadOnlyProperty;
+
+public record UserDTO(@ReadOnlyProperty Long id,
+                      String name,
                       String email,
                       String cpf) {}

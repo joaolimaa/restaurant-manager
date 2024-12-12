@@ -1,44 +1,47 @@
 package fiap.restaurant_manager.adapters.persistence.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import org.hibernate.validator.constraints.br.CNPJ;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import fiap.restaurant_manager.domain.enums.KitchenType;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.List;
 
-
 @Entity
-@Table(name = "restaurant")
 @Data
+@NoArgsConstructor
+@Table(name = "Restaurant")
 public class RestaurantEntity {
 
     @Id
-    @Schema(description = "ID do restaurante", example = "1")
+    @JsonIgnore
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
-    private AddressEntity addressEntity;
-    private String kitchenType;
+
+    @OneToOne
+    @JoinColumn(name = "addressId", referencedColumnName = "id")
+    private AddressEntity address;
+
+    private KitchenType kitchenType;
+
     private String cnpj;
-    private List<OperatingHoursEntity> operatingHourEntities;
+
+    @OneToMany
+    private List<OperatingHoursEntity> operatingHours;
+
     private int capacity;
 
-    public RestaurantEntity(String name, AddressEntity addressEntity, String kitchenType, String cnpj, List<OperatingHoursEntity> operatingHourEntities, int capacity) {
+    public RestaurantEntity(String name, AddressEntity address, KitchenType kitchenType, String cnpj, List<OperatingHoursEntity> operatingHours, int capacity) {
         this.name = name;
-        this.addressEntity = addressEntity;
+        this.address = address;
         this.kitchenType = kitchenType;
         this.cnpj = cnpj;
-        this.operatingHourEntities = operatingHourEntities;
+        this.operatingHours = operatingHours;
         this.capacity = capacity;
     }
 }

@@ -1,13 +1,12 @@
 package fiap.restaurant_manager.adapters.api.dto;
 
-import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
-import fiap.restaurant_manager.adapters.persistence.entities.OperatingHoursEntity;
+import fiap.restaurant_manager.domain.enums.KitchenType;
 
 import java.util.List;
 
 public record RestaurantDTO(String name,
-                            AddressEntity addressEntity,
-                            String kitchenType,
+                            AddressDTO address,
+                            KitchenType kitchenType,
                             String cnpj,
-                            List<OperatingHoursEntity> operatingHourEntities,
+                            List<OperatingHoursDTO> operatingHoursDTO,
                             int capacity) {}

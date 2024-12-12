@@ -1,33 +1,34 @@
 package fiap.restaurant_manager.application.usecases;
 
+import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.application.gateways.RestaurantGateway;
-import fiap.restaurant_manager.domain.entities.Restaurant;
 import lombok.AllArgsConstructor;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class RestaurantUseCase {
     private final RestaurantGateway restaurantGateway;
 
-    public List<Restaurant> findAllRestaurants() {
-        return restaurantGateway.findAllRestaurants();
+    public Collection<RestaurantEntity> findAllRestaurants() {
+        return restaurantGateway.findAll();
     }
 
-    public Restaurant createRestaurant(Restaurant restaurant) {
-
-        return restaurantGateway.save(restaurant);
+    public void createRestaurant(RestaurantEntity restaurantEntity) {
+        restaurantGateway.save(restaurantEntity);
     }
 
-    public Restaurant updateRestaurant(Long id, Restaurant restaurantRequest) {
-        return restaurantGateway.update(id, restaurantRequest);
+    public void updateRestaurant(Long id, RestaurantEntity restaurantEntity) {
+        findRestaurantById(id);
+        restaurantGateway.save(restaurantEntity);
     }
 
-    public boolean deleteRestaurant(Long id) {
-        return restaurantGateway.deleteById(id);
+    public void deleteRestaurant(Long id) {
+        restaurantGateway.deleteById(id);
     }
 
-    public Restaurant findRestaurantById(Long id) {
-       return  restaurantGateway.findById(id);
+    public Optional<RestaurantEntity> findRestaurantById(Long id) {
+        return  restaurantGateway.findById(id);
     }
 }

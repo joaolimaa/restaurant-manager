@@ -32,7 +32,6 @@ public class RestaurantController {
     })
     @GetMapping
     public List<RestaurantDTO> findAllRestaurants() {
-
         return restaurantUseCase.findAllRestaurants().stream().map(mapper::toDTO).toList();
     }
 
