@@ -1,24 +1,25 @@
 package fiap.restaurant_manager.adapters.persistence.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "OperatingHours")
 public class OperatingHoursEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_operating_hours")
+    private long idOperatingHours;
 
     private DayOfWeek dayOfWeek;
 

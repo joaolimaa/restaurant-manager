@@ -11,8 +11,8 @@ import java.util.Optional;
 public class OperatingHoursUseCase {
     private final OperatingHoursGateway operatingHoursGateway;
 
-    public Collection<OperatingHoursEntity> findAllOperatingHours() {
-        return operatingHoursGateway.findAll();
+    public OperatingHoursEntity findOperatingHoursById(Long id) {
+        return operatingHoursGateway.findById(id);
     }
 
     public void createOperatingHours(OperatingHoursEntity operatingHoursEntity) {
@@ -28,7 +28,5 @@ public class OperatingHoursUseCase {
         operatingHoursGateway.deleteById(id);
     }
 
-    public Optional<OperatingHoursEntity> findOperatingHoursById(Long id) {
-        return operatingHoursGateway.findById(id);
-    }
+
 }

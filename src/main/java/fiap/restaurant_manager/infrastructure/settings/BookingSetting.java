@@ -3,9 +3,9 @@ package fiap.restaurant_manager.infrastructure.settings;
 
 
 import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository;
-import fiap.restaurant_manager.adapters.persistence.mapper.BookingEntityMapper;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
 import fiap.restaurant_manager.application.usecases.BookingUseCase;
+import fiap.restaurant_manager.infrastructure.util.mappers.BookingControllerMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -13,19 +13,17 @@ import org.springframework.context.annotation.Configuration;
 public class BookingSetting {
 
     @Bean
-    BookingEntityMapper bookingEntityMapper(){
-        return new BookingEntityMapper();
+    BookingControllerMapper bookingEntityMapper(){
+        return new BookingControllerMapper();
     }
 
     @Bean
-    BookingGateway bookingGateway(BookingRepository repository, BookingEntityMapper mapper){
-        return new BookingGateway(repository, mapper);
+    BookingGateway bookingGateway(BookingRepository repository){
+        return new BookingGateway(repository);
     }
 
     @Bean
-    BookingUseCase updateBookingUseCase(BookingGateway gateway) {
-        return new BookingUseCase(gateway);
+    BookingUseCase bookingUseCase(BookingGateway gateway, BookingControllerMapper controllerMapper) {
+        return new BookingUseCase(gateway, controllerMapper);
     }
-
-    //TODO: Colocar todos os UsesCases
 }

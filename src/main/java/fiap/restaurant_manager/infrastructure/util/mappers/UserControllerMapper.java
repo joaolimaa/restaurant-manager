@@ -13,18 +13,19 @@ public class UserControllerMapper {
                 userDTO.cpf());
     }
 
-    public UserEntity toUserEntity(UserDTO userDTO) {
+    public UserEntity toUserEntity(User user) {
         return new UserEntity(
-                userDTO.name(),
-                userDTO.email(),
-                userDTO.cpf());
+                user.getName(),
+                user.getEmail(),
+                user.getCpf());
     }
 
-    public UserDTO toUserDTO(User user) {
+    public UserDTO toUserDTO(UserEntity userEntity) {
         return new UserDTO(
-                user.getNome(),
-                user.getEmail(),
-                user.getCpf()
+                userEntity.getId(),
+                userEntity.getName(),
+                userEntity.getEmail(),
+                userEntity.getCpf()
         );
     }
 }

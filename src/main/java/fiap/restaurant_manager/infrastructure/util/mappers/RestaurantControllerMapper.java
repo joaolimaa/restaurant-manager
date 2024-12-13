@@ -8,27 +8,27 @@ import lombok.val;
 
 @AllArgsConstructor
 public class RestaurantControllerMapper {
-    private final OperatingHoursMapper mapper;
+    private final OperatingHoursMapper mapperOperatingHour;
+    private final AddressMapper mapperAdress;
 
     public Restaurant toRestaurantDomain(RestaurantDTO restaurant) {
 
-
         return new Restaurant(
                 restaurant.name(),
-                restaurant.address(),
+                mapperAdress.toAddressDomain(restaurant.address()),
                 restaurant.kitchenType(),
                 restaurant.cnpj(),
-                mapper.toOperatingHoursDomain(restaurant),
+                restaurant.operatingHoursDTO().stream().map(mapperOperatingHour::toOperatingHoursDomain).toList(),
                 restaurant.capacity());
     }
 
     public RestaurantEntity toRestaurantEntity(Restaurant restaurant) {
         return new RestaurantEntity(
                 restaurant.getName(),
-                restaurant.getAddressEntity(),
+                mapperAdress.toAddressEntity(restaurant.getAddress()),
                 restaurant.getKitchenType(),
                 restaurant.getCnpj(),
-                restaurant.getOperatingHourEntities(),
+                restaurant.getOperatingHours().stream().map(mapperOperatingHour::toOperatingHoursEntity).toList(),
                 restaurant.getCapacity()
         );
     }
@@ -36,10 +36,10 @@ public class RestaurantControllerMapper {
     public RestaurantDTO toRestaurantDTO(RestaurantEntity restaurant) {
         return new RestaurantDTO(
                 restaurant.getName(),
-                restaurant.getAddressEntity(),
+                mapperAdress.toAddressDTO(restaurant.getAddress()),
                 restaurant.getKitchenType(),
                 restaurant.getCnpj(),
-                restaurant.getOperatingHours(),
+                restaurant.getOperatingHours().stream().map(mapperOperatingHour::toOperatingHoursDTO).toList(),
                 restaurant.getCapacity()
         );
     }

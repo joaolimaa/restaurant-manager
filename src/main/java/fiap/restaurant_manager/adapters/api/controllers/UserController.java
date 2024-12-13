@@ -1,7 +1,6 @@
 package fiap.restaurant_manager.adapters.api.controllers;
 
 import fiap.restaurant_manager.adapters.api.dto.UserDTO;
-import fiap.restaurant_manager.adapters.api.mapper.UserControllerMapper;
 import fiap.restaurant_manager.application.usecases.UserUseCase;
 import fiap.restaurant_manager.adapters.persistence.entities.UserEntity;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,14 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.Collection;
 
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserUseCase userUseCase;
-    private final UserControllerMapper mapper;
+
 
     @Operation(summary = "Coleta todos os usuários")
     @ApiResponses({
@@ -31,8 +30,8 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     @GetMapping
-    public List<UserDTO> findAllUsers() {
-        return userUseCase.findAllUsers().stream().map(mapper::toDTO).toList();
+    public ResponseEntity<Collection<UserDTO>> findAllUsers() {
+        return ResponseEntity.status(HttpStatus.OK).body(userUseCase.findAllUsers());
     }
 
     @Operation(summary = "Procura um usuário pelo ID")
@@ -44,8 +43,7 @@ public class UserController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findUserById(@PathVariable Long id) {
-        val user = userUseCase.findUserById(id);
-        return user != null ? ResponseEntity.ok(mapper.toDTO(user)) : ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.OK).body(userUseCase.findUserById(id));
     }
 
     @Operation(summary = "Cria um novo usuário")
@@ -56,9 +54,9 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO user) {
-        val createdUser = userUseCase.createUser(mapper.toUser(user));
-        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDTO(createdUser));
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
+        userUseCase.createUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
     }
 
     @Operation(summary = "Atualiza usuário existente")
@@ -70,9 +68,8 @@ public class UserController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO user) {
-        val updatedUser = userUseCase.updateUser(id, mapper.toUser(user));
-        return updatedUser != null ? ResponseEntity.ok(mapper.toDTO(updatedUser)) : ResponseEntity.notFound().build();
+    public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(userUseCase.updateUser(id, userDTO));
     }
 
     @Operation(summary = "Deleta usuário")
@@ -81,9 +78,10 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        val isDeleted = userUseCase.deleteUser(id);
-        return isDeleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build();
+        userUseCase.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }

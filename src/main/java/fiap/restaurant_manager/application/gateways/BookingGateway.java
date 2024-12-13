@@ -2,10 +2,12 @@ package fiap.restaurant_manager.application.gateways;
 
 import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository;
+import fiap.restaurant_manager.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 
+
 import java.util.Collection;
-import java.util.Optional;
+
 
 @AllArgsConstructor
 public class BookingGateway {
@@ -15,12 +17,12 @@ public class BookingGateway {
         return bookingRepository.findAll();
     }
 
-    public Optional<BookingEntity> findById(Long id){
-        return bookingRepository.findById(id);
+    public BookingEntity findById(Long id){
+        return bookingRepository.findById(id).orElseThrow(() -> new NotFoundException("Reserva " + id + " não encontrada."));
     }
 
-    public void save(BookingEntity bookingEntity) {
-        bookingRepository.save(bookingEntity);
+    public BookingEntity save(BookingEntity bookingEntity) {
+        return bookingRepository.save(bookingEntity);
     }
 
     public void deleteById(Long id) {

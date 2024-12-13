@@ -11,8 +11,8 @@ import java.util.Optional;
 public class AddressUseCase {
     private final AddressGateway addressGateway;
 
-    public Collection<AddressEntity> findAllBooking() {
-        return addressGateway.findAll();
+    public AddressEntity findAddressById(Long id) {
+        return addressGateway.findById(id);
     }
 
     public void createAddress(AddressEntity addressEntity) {
@@ -28,7 +28,5 @@ public class AddressUseCase {
         addressGateway.deleteById(id);
     }
 
-    public Optional<AddressEntity> findAddressById(Long id) {
-        return addressGateway.findById(id);
-    }
+
 }

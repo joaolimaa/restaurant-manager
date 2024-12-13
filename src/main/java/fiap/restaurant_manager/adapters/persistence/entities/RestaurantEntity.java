@@ -1,30 +1,28 @@
 package fiap.restaurant_manager.adapters.persistence.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import fiap.restaurant_manager.domain.enums.KitchenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
 import java.util.List;
 
 @Entity
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "Restaurant")
 public class RestaurantEntity {
 
     @Id
-    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String name;
 
     @OneToOne
-    @JoinColumn(name = "addressId", referencedColumnName = "id")
+    @JoinColumn(name = "id_address", referencedColumnName = "id")
     private AddressEntity address;
 
     private KitchenType kitchenType;
@@ -32,6 +30,7 @@ public class RestaurantEntity {
     private String cnpj;
 
     @OneToMany
+    @JoinColumn(name = "id_operating_hours", nullable = false)
     private List<OperatingHoursEntity> operatingHours;
 
     private int capacity;
