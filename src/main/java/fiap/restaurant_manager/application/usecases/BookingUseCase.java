@@ -1,7 +1,11 @@
 package fiap.restaurant_manager.application.usecases;
 
 import fiap.restaurant_manager.adapters.api.dto.BookingDTO;
+import fiap.restaurant_manager.adapters.api.dto.RestaurantDTO;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
+import fiap.restaurant_manager.domain.entities.Booking;
+import fiap.restaurant_manager.domain.enums.StatusBooking;
+import fiap.restaurant_manager.domain.exception.ExpectationFailedException;
 import fiap.restaurant_manager.infrastructure.util.mappers.BookingControllerMapper;
 import lombok.AllArgsConstructor;
 import lombok.val;
@@ -11,9 +15,11 @@ import java.util.Collection;
 
 @AllArgsConstructor
 public class BookingUseCase {
+
     private final BookingGateway bookingGateway;
     private final BookingControllerMapper mapper;
-
+    private final RestaurantUseCase restaurantUseCase;
+    private final UserUseCase userUseCase;
 
     public BookingDTO findBookingById(Long id) {
         return mapper.toBookingDTO(bookingGateway.findById(id));
@@ -24,12 +30,15 @@ public class BookingUseCase {
     }
 
     public BookingDTO createBooking(BookingDTO booking) {
+        validaStatus(booking);
 
         val bookingDomain = mapper.toBookingDomain(booking);
         val bookingEntity = mapper.toBookingEntity(bookingDomain);
 
-        //TODO: Verificar o ID Restaurant
-        //TODO: Verificar o  ID User
+        val restaurant = restaurantUseCase.findRestaurantById(bookingEntity.getRestaurantId());
+        val user = userUseCase.findUserById(bookingEntity.getUserId());
+
+        validCapacityRestaurant(bookingDomain, restaurant);
 
         return mapper.toBookingDTO(bookingGateway.save(bookingEntity));
     }
@@ -40,14 +49,53 @@ public class BookingUseCase {
         val bookingDomainNew = mapper.toBookingDomain(booking);
 
         bookingDomain.setBookingDate(bookingDomainNew.getBookingDate());
+
+        val restaurant = restaurantUseCase.findRestaurantById(bookingDomain.getRestaurantId());
+
+        validCapacityRestaurant(bookingDomainNew, restaurant);
+
         bookingDomain.setPeopleQuantity(bookingDomainNew.getPeopleQuantity());
 
         return mapper.toBookingDTO(bookingGateway.save(mapper.toBookingEntity(bookingDomain)));
+    }
+
+
+
+    public BookingDTO updateStatus(Long id, StatusBooking statusBooking) {
+        val bookingDomain = mapper.toBookingDomain(findBookingById(id));
+        StatusBooking statusReservaAtual = bookingDomain.getStatus();
+
+        val bookingEntity = mapper.toBookingEntity(bookingDomain);
+
+        if (statusReservaAtual.equals(StatusBooking.CONFIRMED) || statusReservaAtual.equals(StatusBooking.PENDANT)) {
+
+            validaStatus(mapper.toBookingDTO(bookingEntity));
+
+            bookingEntity.setId(id);
+            bookingEntity.setStatus(statusBooking);
+
+            return mapper.toBookingDTO(bookingGateway.save(bookingEntity));
+        }
+
+        throw new ExpectationFailedException("Essa reserva não pode ser atualizada, pois já está cancelada.");
     }
 
     public void deleteBooking(Long id) {
         bookingGateway.deleteById(id);
     }
 
+    private static void validaStatus(BookingDTO reservaDTO) {
+        try {
+            StatusBooking.valueOf(String.valueOf(reservaDTO.status()));
+        } catch (Exception e) {
+            throw new ExpectationFailedException("Valor diferente de CONFIRMADA ou CANCELADA.");
+        }
+    }
+
+    private static void validCapacityRestaurant(Booking booking, RestaurantDTO restaurant) {
+        if (booking.getPeopleQuantity() > restaurant.capacity()) {
+            throw new IllegalArgumentException("A capacidade máxima excedida do restaurante.");
+        }
+    }
 
 }

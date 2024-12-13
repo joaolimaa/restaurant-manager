@@ -1,8 +1,10 @@
 package fiap.restaurant_manager.adapters.api.controllers;
 
 import fiap.restaurant_manager.adapters.api.dto.BookingDTO;
+import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.application.usecases.BookingUseCase;
+import fiap.restaurant_manager.domain.enums.StatusBooking;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,7 +38,7 @@ public class BookingController {
     @Operation(summary = "Cria uma nova reserva")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Reserva criada com sucesso",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = RestaurantEntity.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = BookingEntity.class))),
             @ApiResponse(responseCode = "400", description = "Input inválido"),
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor")
     })
@@ -49,7 +51,11 @@ public class BookingController {
     @PutMapping("/{id}")
     public ResponseEntity<BookingDTO> update(@PathVariable Long id, @Valid @RequestBody BookingDTO bookingDTO) {
         return ResponseEntity.status(HttpStatus.OK).body(bookingUseCase.updateBooking(id, bookingDTO));
+    }
 
+    @PutMapping("muda-status/{id}")
+    public ResponseEntity<BookingDTO> updateStatus(@PathVariable Long id, @Valid @RequestBody StatusBooking statusBooking) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingUseCase.updateStatus(id, statusBooking));
     }
 
     @DeleteMapping("/{id}")

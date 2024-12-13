@@ -20,7 +20,6 @@ public class RestaurantUseCase {
     }
 
     public RestaurantDTO findRestaurantById(Long id) {
-
         return mapper.toRestaurantDTO(restaurantGateway.findById(id));
     }
 

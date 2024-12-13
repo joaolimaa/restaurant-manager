@@ -1,5 +1,6 @@
 package fiap.restaurant_manager.adapters.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import org.springframework.data.annotation.ReadOnlyProperty;
 
