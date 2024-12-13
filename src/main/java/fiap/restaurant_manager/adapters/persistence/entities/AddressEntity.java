@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Address")
+@Table(name = "address")
 public class AddressEntity {
 
     @Id

@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "Restaurant")
+@Table(name = "restaurant")
 public class RestaurantEntity {
 
     @Id
@@ -22,15 +22,14 @@ public class RestaurantEntity {
     private String name;
 
     @OneToOne
-    @JoinColumn(name = "id_address", referencedColumnName = "id")
+    @JoinColumn(name = "id_address", referencedColumnName = "id_address")
     private AddressEntity address;
 
     private KitchenType kitchenType;
 
     private String cnpj;
 
-    @OneToMany
-    @JoinColumn(name = "id_operating_hours", nullable = false)
+    @OneToMany(mappedBy = "restaurant", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OperatingHoursEntity> operatingHours;
 
     private int capacity;

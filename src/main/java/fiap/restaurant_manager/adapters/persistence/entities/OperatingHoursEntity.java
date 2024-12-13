@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "OperatingHours")
+@Table(name = "operatinghours")
 public class OperatingHoursEntity {
 
     @Id
@@ -26,6 +26,10 @@ public class OperatingHoursEntity {
     private ZonedDateTime startTime;
 
     private ZonedDateTime endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "id_restaurant")
+    private RestaurantEntity restaurant;
 
     public OperatingHoursEntity(DayOfWeek dayOfWeek, ZonedDateTime startTime, ZonedDateTime endTime) {
         this.dayOfWeek = dayOfWeek;
