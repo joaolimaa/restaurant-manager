@@ -2,9 +2,11 @@ package fiap.restaurant_manager.application.usecases;
 
 import fiap.restaurant_manager.adapters.api.dto.BookingDTO;
 import fiap.restaurant_manager.adapters.api.dto.RestaurantDTO;
+import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
 import fiap.restaurant_manager.domain.entities.Booking;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
+import fiap.restaurant_manager.domain.enums.ValidBookingStatus;
 import fiap.restaurant_manager.domain.exception.ExpectationFailedException;
 import fiap.restaurant_manager.infrastructure.util.mappers.BookingControllerMapper;
 import lombok.AllArgsConstructor;
@@ -30,7 +32,6 @@ public class BookingUseCase {
     }
 
     public BookingDTO createBooking(BookingDTO booking) {
-        validaStatus(booking);
 
         val bookingDomain = mapper.toBookingDomain(booking);
         val bookingEntity = mapper.toBookingEntity(bookingDomain);
@@ -59,20 +60,17 @@ public class BookingUseCase {
         return mapper.toBookingDTO(bookingGateway.save(mapper.toBookingEntity(bookingDomain)));
     }
 
-
-
     public BookingDTO updateStatus(Long id, StatusBooking statusBooking) {
         val bookingDomain = mapper.toBookingDomain(findBookingById(id));
         StatusBooking statusReservaAtual = bookingDomain.getStatus();
 
         val bookingEntity = mapper.toBookingEntity(bookingDomain);
 
-        if (statusReservaAtual.equals(StatusBooking.CONFIRMED) || statusReservaAtual.equals(StatusBooking.PENDANT)) {
+        if (statusReservaAtual.equals(StatusBooking.CONFIRMED) || statusReservaAtual.equals(StatusBooking.PENDING)) {
 
-            validaStatus(mapper.toBookingDTO(bookingEntity));
-
-            bookingEntity.setId(id);
             bookingEntity.setStatus(statusBooking);
+
+            validateStatus(bookingEntity);
 
             return mapper.toBookingDTO(bookingGateway.save(bookingEntity));
         }
@@ -84,9 +82,9 @@ public class BookingUseCase {
         bookingGateway.deleteById(id);
     }
 
-    private static void validaStatus(BookingDTO reservaDTO) {
+    private static void validateStatus(BookingEntity booking) {
         try {
-            StatusBooking.valueOf(String.valueOf(reservaDTO.status()));
+            ValidBookingStatus.valueOf(String.valueOf(booking.getStatus()));
         } catch (Exception e) {
             throw new ExpectationFailedException("Valor diferente de CONFIRMADA ou CANCELADA.");
         }

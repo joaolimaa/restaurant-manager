@@ -1,7 +1,6 @@
 package fiap.restaurant_manager.domain.enums;
 
-public enum StatusBooking {
-    PENDING,
+public enum ValidBookingStatus {
     CONFIRMED,
     CANCELED
 }
