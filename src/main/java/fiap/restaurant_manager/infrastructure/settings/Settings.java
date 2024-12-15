@@ -1,11 +1,7 @@
 package fiap.restaurant_manager.infrastructure.settings;
 
-import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository;
-import fiap.restaurant_manager.adapters.persistence.repository.RestaurantRepository;
-import fiap.restaurant_manager.adapters.persistence.repository.UserRepository;
-import fiap.restaurant_manager.application.gateways.BookingGateway;
-import fiap.restaurant_manager.application.gateways.RestaurantGateway;
-import fiap.restaurant_manager.application.gateways.UserGateway;
+import fiap.restaurant_manager.adapters.persistence.repository.*;
+import fiap.restaurant_manager.application.gateways.*;
 import fiap.restaurant_manager.application.usecases.BookingUseCase;
 import fiap.restaurant_manager.application.usecases.RestaurantUseCase;
 import fiap.restaurant_manager.application.usecases.UserUseCase;
@@ -35,9 +31,24 @@ public class Settings {
     RestaurantGateway restaurantGateway(RestaurantRepository restaurantRepository){
         return new RestaurantGateway(restaurantRepository);
     }
+
     @Bean
-    RestaurantUseCase restaurantUseCase(RestaurantGateway restaurantGateway, RestaurantControllerMapper controllerMapper){
-        return new RestaurantUseCase(restaurantGateway, controllerMapper);
+    public OperatingHoursGateway operatingHoursGateway(OperatingHoursRepository operatingHoursRepository) {
+        return new OperatingHoursGateway(operatingHoursRepository); // Replace with your implementation
+    }
+
+    @Bean
+    public AddressGateway addressGateway(AddressRepository addressRepository) {
+        return new AddressGateway(addressRepository); // Replace with your implementation
+    }
+
+    @Bean
+    RestaurantUseCase restaurantUseCase(
+        RestaurantGateway restaurantGateway,
+        RestaurantControllerMapper controllerMapper,
+        OperatingHoursGateway operatingHoursGateway,
+        AddressGateway addressGateway){
+        return new RestaurantUseCase(restaurantGateway, controllerMapper, operatingHoursGateway, addressGateway);
     }
 
     @Bean

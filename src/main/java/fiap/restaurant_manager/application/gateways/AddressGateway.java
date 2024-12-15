@@ -2,11 +2,7 @@ package fiap.restaurant_manager.application.gateways;
 
 import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
 import fiap.restaurant_manager.adapters.persistence.repository.AddressRepository;
-import fiap.restaurant_manager.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
-
-import java.util.Collection;
-import java.util.Optional;
 
 @AllArgsConstructor
 public class AddressGateway {

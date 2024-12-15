@@ -4,7 +4,6 @@ import fiap.restaurant_manager.adapters.api.dto.RestaurantDTO;
 import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.domain.entities.Restaurant;
 import lombok.AllArgsConstructor;
-import lombok.val;
 
 @AllArgsConstructor
 public class RestaurantControllerMapper {

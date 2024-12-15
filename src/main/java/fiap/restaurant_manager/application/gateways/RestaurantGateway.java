@@ -6,7 +6,6 @@ import fiap.restaurant_manager.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 
 import java.util.Collection;
-import java.util.Optional;
 
 @AllArgsConstructor
 public class RestaurantGateway {
