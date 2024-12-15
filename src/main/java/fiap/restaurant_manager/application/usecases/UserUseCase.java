@@ -40,8 +40,7 @@ public class UserUseCase {
         userDomain.setName(userDomainNew.getName());
         userDomain.setEmail(userDomainNew.getEmail());
 
-
-        return mapper.toUserDTO(userGateway.save(mapper.toUserEntity(userDomain)));
+        return mapper.toUserDTO(userGateway.save(mapper.toUserEntity(id, userDomain)));
 
     }
 

@@ -20,6 +20,14 @@ public class UserControllerMapper {
                 user.getCpf());
     }
 
+    public UserEntity toUserEntity(Long id, User user) {
+        return new UserEntity(
+                id,
+                user.getName(),
+                user.getEmail(),
+                user.getCpf());
+    }
+
     public UserDTO toUserDTO(UserEntity userEntity) {
         return new UserDTO(
                 userEntity.getId(),

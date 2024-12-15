@@ -55,8 +55,7 @@ public class UserController {
     })
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
-        userUseCase.createUser(userDTO);
-        return ResponseEntity.status(HttpStatus.CREATED).body(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userUseCase.createUser(userDTO));
     }
 
     @Operation(summary = "Atualiza usuário existente")
@@ -69,7 +68,8 @@ public class UserController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<UserDTO> updateUser(@PathVariable Long id, @Valid @RequestBody UserDTO userDTO) {
-        return ResponseEntity.status(HttpStatus.OK).body(userUseCase.updateUser(id, userDTO));
+        var result = userUseCase.updateUser(id, userDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
     @Operation(summary = "Deleta usuário")
