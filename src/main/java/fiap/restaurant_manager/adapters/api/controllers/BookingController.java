@@ -2,7 +2,6 @@ package fiap.restaurant_manager.adapters.api.controllers;
 
 import fiap.restaurant_manager.adapters.api.dto.BookingDTO;
 import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
-import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
 import fiap.restaurant_manager.application.usecases.BookingUseCase;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import io.swagger.v3.oas.annotations.Operation;

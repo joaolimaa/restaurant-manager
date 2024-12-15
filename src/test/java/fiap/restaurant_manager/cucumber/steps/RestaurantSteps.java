@@ -12,10 +12,9 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
-import java.time.*;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import static fiap.restaurant_manager.cucumber.helper.StepsHelper.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertNotNull;
@@ -49,45 +48,7 @@ public class RestaurantSteps {
         final KitchenType kitchenType = parseKitchenType(details.get(7));
         final OperatingHoursDTO operatingHour = buildOperatingHours(details.get(10));
 
-        restaurantDTO = new RestaurantDTO(
-                details.get(0),
-                address,
-                kitchenType,
-                details.get(8),
-                List.of(operatingHour),
-                Integer.parseInt(details.get(9))
-        );
-    }
-
-    private AddressDTO buildAddress(List<String> details) {
-        return new AddressDTO(
-                details.get(1),  // postalCode
-                details.get(2),  // city
-                details.get(3),  // state
-                details.get(4),  // neighborhood
-                details.get(5),  // street
-                details.get(6)   // number
-        );
-    }
-
-    private KitchenType parseKitchenType(String kitchenType) {
-        return KitchenType.valueOf(kitchenType.toUpperCase().replaceAll("\"", ""));
-    }
-
-    private OperatingHoursDTO buildOperatingHours(String operatingHours) {
-        // Example format: "MONDAY, HH:mm-HH:mm"
-        String[] operatingHoursParts = operatingHours.split(", ");
-        DayOfWeek dayOfWeek = DayOfWeek.valueOf(operatingHoursParts[0].toUpperCase());
-        String[] timeRange = operatingHoursParts[1].split("-");
-
-        LocalTime startTime = LocalTime.parse(timeRange[0], DateTimeFormatter.ofPattern("HH:mm"));
-        LocalTime endTime = LocalTime.parse(timeRange[1], DateTimeFormatter.ofPattern("HH:mm"));
-
-        return new OperatingHoursDTO(
-                dayOfWeek,
-                ZonedDateTime.of(LocalDate.now(), startTime, ZoneId.systemDefault()),
-                ZonedDateTime.of(LocalDate.now(), endTime, ZoneId.systemDefault())
-        );
+        restaurantDTO = getRestaurantDto(details, address, kitchenType, operatingHour);
     }
 
     @When("I send a POST request to {string} with the restaurant details")
@@ -164,7 +125,7 @@ public class RestaurantSteps {
         assertEquals(expectedDetails.get("kitchenType"), restaurantFromGetList.kitchenType().name());
         assertEquals(expectedDetails.get("cnpj"), restaurantFromGetList.cnpj());
         assertEquals(Integer.parseInt(expectedDetails.get("capacity")), restaurantFromGetList.capacity());
-
+        
         // Validate operating hours
         //        List<OperatingHoursDTO> operatingHours = restaurantFromGetList.operatingHoursDTO();
         //        assertFalse(operatingHours.isEmpty());
@@ -249,7 +210,7 @@ public class RestaurantSteps {
     @And("the restaurant with ID {int} should no longer exist in the system, and should retrieve {int}")
     public void noLongerExists(final int id, final int statusCode)
     {
-        var path = "/api/users/" + id;
+        var path = "/api/restaurants/" + id;
 
         var getResponse = restTemplate.getForEntity(path, UserDTO.class);
 

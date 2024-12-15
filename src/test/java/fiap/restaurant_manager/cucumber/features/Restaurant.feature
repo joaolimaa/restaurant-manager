@@ -27,6 +27,11 @@ Feature: Manage Restaurants
   #  And I should see the updated restaurant details
 
   Scenario: Delete a restaurant
+    Given I have valid restaurant details:
+      | name      | postalCode  | city        | state         | neighborhood        | street        | number  | kitchenType | cnpj                  | capacity | operatingHours      |
+      | Test Cafe | 12345       | Test City   | Test State    | Test Neighborhood   | Main Street   | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | MONDAY, 08:00-18:00 |
+    When I send a POST request to "/api/restaurants" with the restaurant details
+    Then I should receive a 201 status code
     Given the restaurant with ID 1 exists in the system
     When Regarding to restaurants, I send a DELETE request to "/api/restaurants/1"
     Then I should receive a 204 status code

@@ -159,6 +159,8 @@ public class UserSteps {
    @Then("the response status should be {int}")
    public void theResponseStatusShouldBe(int expectedStatus) {
        // Verify the response status
+       System.out.println(expectedStatus);
+       System.out.println(response.getStatusCodeValue());
        assertEquals(response.getStatusCodeValue(), expectedStatus);
    }
 
