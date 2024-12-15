@@ -25,3 +25,9 @@ Feature: Manage Restaurants
   #  When I send a PUT request to "/api/restaurants/1" with the updated details
   #  Then I should receive a 200 status code
   #  And I should see the updated restaurant details
+
+  Scenario: Delete a restaurant
+    Given the restaurant with ID 1 exists in the system
+    When Regarding to restaurants, I send a DELETE request to "/api/restaurants/1"
+    Then I should receive a 204 status code
+    And the restaurant with ID 1 should no longer exist in the system, and should retrieve 404

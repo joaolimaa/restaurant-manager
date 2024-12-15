@@ -1,9 +1,9 @@
 package fiap.restaurant_manager.cucumber.steps;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fiap.restaurant_manager.adapters.api.dto.AddressDTO;
 import fiap.restaurant_manager.adapters.api.dto.OperatingHoursDTO;
 import fiap.restaurant_manager.adapters.api.dto.RestaurantDTO;
+import fiap.restaurant_manager.adapters.api.dto.UserDTO;
 import fiap.restaurant_manager.domain.enums.KitchenType;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -18,6 +18,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.springframework.boot.test.web.client.TestRestTemplate;
@@ -26,10 +27,7 @@ import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
 import java.util.Map;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 
 @AutoConfigureMockMvc
 public class RestaurantSteps {
@@ -42,9 +40,6 @@ public class RestaurantSteps {
 
     @Autowired
     private TestRestTemplate restTemplate;
-
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Given("I have valid restaurant details:")
     public void i_have_valid_restaurant_details(io.cucumber.datatable.DataTable dataTable) {
@@ -249,6 +244,39 @@ public class RestaurantSteps {
                 returnedRestaurant.operatingHoursDTO().get(0).startTime());
         assertEquals(updatedRestaurant.operatingHoursDTO().get(0).endTime(),
                 returnedRestaurant.operatingHoursDTO().get(0).endTime());
+    }
+
+    @And("the restaurant with ID {int} should no longer exist in the system, and should retrieve {int}")
+    public void noLongerExists(final int id, final int statusCode)
+    {
+        var path = "/api/users/" + id;
+
+        var getResponse = restTemplate.getForEntity(path, UserDTO.class);
+
+        assertNotNull(getResponse);
+
+        this.statusCode = getResponse.getStatusCode().value();
+
+        assertEquals(this.statusCode, statusCode);
+    }
+
+    @When("Regarding to restaurants, I send a DELETE request to {string}")
+    public void delete(final String endPoint) {
+
+        final HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        final HttpEntity<String> entity = new HttpEntity<>(headers);
+
+        try{
+            var delete = restTemplate.exchange(endPoint, HttpMethod.DELETE, entity, Void.class);
+
+            statusCode = delete.getStatusCode().value();
+
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        System.out.println(statusCode);
     }
 
 }

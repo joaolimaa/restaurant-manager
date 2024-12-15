@@ -187,17 +187,14 @@ public class UserSteps {
         System.out.println(response.getBody());
     }
 
-    @When("I send a DELETE request to {string}")
-    public void delete(final String endPoint) throws Exception {
+    @Then("I send a DELETE request to {string}")
+    public void delete(final String endPoint) {
 
-        // Set the headers
-        HttpHeaders headers = new HttpHeaders();
+        final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Create the HTTP entity
-        HttpEntity<String> entity = new HttpEntity<>(headers);
+        final HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        // Perform the PUT request
         try{
             var delete = restTemplate.exchange(endPoint, HttpMethod.DELETE, entity, Void.class);
 
