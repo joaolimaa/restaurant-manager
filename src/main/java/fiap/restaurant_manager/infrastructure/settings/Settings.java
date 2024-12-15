@@ -45,10 +45,20 @@ public class Settings {
     @Bean
     RestaurantUseCase restaurantUseCase(
         RestaurantGateway restaurantGateway,
-        RestaurantControllerMapper controllerMapper,
+        RestaurantControllerMapper restaurantControllerMapper,
+        AddressMapper addressMapper,
+        OperatingHoursMapper operatingHoursMapper,
         OperatingHoursGateway operatingHoursGateway,
-        AddressGateway addressGateway){
-        return new RestaurantUseCase(restaurantGateway, controllerMapper, operatingHoursGateway, addressGateway);
+        AddressGateway addressGateway
+    ){
+        return new RestaurantUseCase(
+                restaurantGateway,
+                restaurantControllerMapper,
+                addressMapper,
+                operatingHoursMapper,
+                operatingHoursGateway,
+                addressGateway
+        );
     }
 
     @Bean

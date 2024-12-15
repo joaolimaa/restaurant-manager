@@ -16,6 +16,16 @@ public class AddressMapper {
                 address.number());
     }
 
+    public Address toAddressDomain(AddressEntity address) {
+        return new Address(
+                address.getPostalCode(),
+                address.getCity(),
+                address.getState(),
+                address.getNeighborhood(),
+                address.getStreet(),
+                address.getNumber());
+    }
+
     public AddressEntity toAddressEntity(Address address) {
         return new AddressEntity(
                 address.getPostalCode(),
