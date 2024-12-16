@@ -62,11 +62,11 @@ public class BookingUseCase {
 
     public BookingDTO updateStatus(Long id, StatusBooking statusBooking) {
         val bookingDomain = mapper.toBookingDomain(findBookingById(id));
-        StatusBooking statusReservaAtual = bookingDomain.getStatus();
+        StatusBooking currentStatusBooking = bookingDomain.getStatus();
 
         val bookingEntity = mapper.toBookingEntity(bookingDomain);
 
-        if (statusReservaAtual.equals(StatusBooking.CONFIRMED) || statusReservaAtual.equals(StatusBooking.PENDING)) {
+        if (currentStatusBooking.equals(StatusBooking.CONFIRMED) || currentStatusBooking.equals(StatusBooking.PENDING)) {
 
             bookingEntity.setStatus(statusBooking);
 
