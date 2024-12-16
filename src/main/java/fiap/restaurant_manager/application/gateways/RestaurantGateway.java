@@ -1,12 +1,31 @@
 package fiap.restaurant_manager.application.gateways;
 
-import fiap.restaurant_manager.domain.entities.Restaurant;
-import java.util.List;
+import fiap.restaurant_manager.adapters.persistence.entities.RestaurantEntity;
+import fiap.restaurant_manager.adapters.persistence.repository.RestaurantRepository;
+import fiap.restaurant_manager.domain.exception.NotFoundException;
+import lombok.AllArgsConstructor;
 
-public interface RestaurantGateway {
-    List<Restaurant> findAllRestaurants();
-    Restaurant findById(Long id);
-    Restaurant save(Restaurant restaurant);
-    Restaurant update(Long id, Restaurant restaurant);
-    boolean deleteById(Long id);
+import java.util.Collection;
+
+@AllArgsConstructor
+public class RestaurantGateway {
+    private final RestaurantRepository restaurantRepository;
+
+
+    public Collection<RestaurantEntity> findAll() {
+        return restaurantRepository.findAll();
+    }
+
+    public RestaurantEntity findById(Long id) {
+        return restaurantRepository.findById(id).orElseThrow(() -> new NotFoundException("O Restaurante " + id + " não encontrada."));
+    }
+
+    public RestaurantEntity save(RestaurantEntity restaurantEntity) {
+
+        return restaurantRepository.save(restaurantEntity);
+    }
+
+    public void deleteById(Long id) {
+        restaurantRepository.deleteById(id);
+    }
 }

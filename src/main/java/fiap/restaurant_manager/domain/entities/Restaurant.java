@@ -1,21 +1,18 @@
 package fiap.restaurant_manager.domain.entities;
 
-import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
-import fiap.restaurant_manager.adapters.persistence.entities.OperatingHoursEntity;
+import fiap.restaurant_manager.domain.enums.KitchenType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
 @AllArgsConstructor
-@NoArgsConstructor
 public class Restaurant {
     private String name;
-    private AddressEntity addressEntity;
-    private String kitchenType;
+    private Address address;
+    private KitchenType kitchenType;
     private String cnpj;
-    private List<OperatingHoursEntity> operatingHourEntities;
+    private List<OperatingHours> operatingHours;
     private int capacity;
 }

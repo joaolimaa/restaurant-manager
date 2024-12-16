@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Adress {
+public class Address {
     private String postalCode;
     private String city;
     private String state;

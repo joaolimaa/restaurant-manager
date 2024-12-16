@@ -1,34 +1,39 @@
 package fiap.restaurant_manager.adapters.persistence.entities;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.validation.constraints.NotNull;
+import jakarta.persistence.*;
+
 import java.time.DayOfWeek;
 import java.time.ZonedDateTime;
-import io.swagger.v3.oas.annotations.media.Schema;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
 
-@AllArgsConstructor
-@NoArgsConstructor
+@Entity
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "operatinghours")
 public class OperatingHoursEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_operating_hours")
+    private long idOperatingHours;
 
-    @NotNull(message = "O dia da semana não pode ser nulo")
-    @Schema(description = "Representa o dia da semana", example = "segunda-feira", requiredMode = Schema.RequiredMode.REQUIRED)
     private DayOfWeek dayOfWeek;
 
-    @NotNull(message = "O horário de início não pode ser nulo")
-    @Schema(description = "Horário de início do funcionamento", example = "2024-11-27T09:00:00+00:00", requiredMode = Schema.RequiredMode.REQUIRED)
     private ZonedDateTime startTime;
 
-    @NotNull(message = "O horário de término não pode ser nulo")
-    @Schema(description = "Horário de término do funcionamento", example = "2024-11-27T17:00:00+00:00", requiredMode = Schema.RequiredMode.REQUIRED)
     private ZonedDateTime endTime;
+
+    @ManyToOne
+    @JoinColumn(name = "id_restaurant")
+    private RestaurantEntity restaurant;
+
+    public OperatingHoursEntity(DayOfWeek dayOfWeek, ZonedDateTime startTime, ZonedDateTime endTime) {
+        this.dayOfWeek = dayOfWeek;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
 }

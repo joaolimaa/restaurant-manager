@@ -1,22 +1,26 @@
 package fiap.restaurant_manager.adapters.persistence.entities;
 
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "user")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Table(name = "users")
 public class UserEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
+
     private String name;
+
     private String email;
+
     private String cpf;
 
     public UserEntity(String name, String email, String cpf) {

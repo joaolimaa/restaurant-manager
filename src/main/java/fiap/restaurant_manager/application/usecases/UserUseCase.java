@@ -1,29 +1,52 @@
 package fiap.restaurant_manager.application.usecases;
 
+import fiap.restaurant_manager.adapters.api.dto.UserDTO;
+import fiap.restaurant_manager.adapters.persistence.entities.UserEntity;
 import fiap.restaurant_manager.application.gateways.UserGateway;
-import fiap.restaurant_manager.domain.entities.User;
+import fiap.restaurant_manager.infrastructure.util.mappers.UserControllerMapper;
 import lombok.AllArgsConstructor;
+import lombok.val;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.Optional;
 
 @AllArgsConstructor
 public class UserUseCase {
     private final UserGateway userGateway;
+    private final UserControllerMapper mapper;
 
-    public  User findUserById(Long id){
-        return userGateway.findById(id);
+    public Collection<UserDTO> findAllUsers() {
+        return userGateway.findAll().stream().map(mapper::toUserDTO).toList();
     }
-    public User cadastrarUsuario(User usuario){
-        return userGateway.cadastrarUsuario(usuario);
+
+    public UserDTO findUserById(Long id) {
+
+        return mapper.toUserDTO(userGateway.findById(id));
     }
-    public List<User> listarTodos(){
-        return userGateway.listarTodos();
+
+    public UserDTO createUser(UserDTO userDTO) {
+
+        val userDomain = mapper.toUserDomain(userDTO);
+        val userEntity = mapper.toUserEntity(userDomain);
+
+        return mapper.toUserDTO(userGateway.save(userEntity));
     }
-    public User alterarUsuario(Long id, User user){
-        return userGateway.alterarUsuario(id, user);
+
+    public UserDTO updateUser(Long id, UserDTO userDTO) {
+
+        val userDomain = mapper.toUserDomain(findUserById(id));
+        val userDomainNew = mapper.toUserDomain(userDTO);
+
+        userDomain.setName(userDomainNew.getName());
+        userDomain.setEmail(userDomainNew.getEmail());
+
+        return mapper.toUserDTO(userGateway.save(mapper.toUserEntity(id, userDomain)));
+
     }
-    public boolean deletarUsuario(Long id){
-        return userGateway.deletarUsuario(id);
+
+    public void deleteUser(Long id) {
+        userGateway.deleteById(id);
     }
+
 
 }
