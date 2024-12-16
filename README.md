@@ -110,4 +110,12 @@ docker-compose up -d
 
 Após a execução, a aplicação estará disponível em http://localhost:8080
 
-A documentação da API está disponível no Swagger, que pode ser acessada em: http://localhost:8080/swagger-ui/index.html
+A documentação da API está disponível no Swagger, que pode ser acessada em: 
+
+Local:
+
+http://localhost:8080/swagger-ui/index.html
+
+Link da aplicação na Azure:
+
+https://restaurant-manager-hnhydph8fufcdagp.brazilsouth-01.azurewebsites.net/swagger-ui/index.html
