@@ -54,8 +54,7 @@ O objetivo do projeto é a criação de um sistema completo de **Reserva e Avali
 
 Tipos de deploy escolhidos para o sistema:  
 - Local  
-- AWS ECS  
-- Heroku
+- Azure
 
 ## 📊 Gerar Relatório de testes pelo Jacoco:
 
@@ -78,18 +77,19 @@ src/main/java/fiap/restaurant_manager/
 │   └── persistence         // Implementações dos repositórios (JPA, MongoDB, etc.)
 │
 ├── application             // Application Layer
-│   ├── usecase             // Casos de uso da aplicação
-│   └── gateway             // Interfaces (ports) para comunicação entre o domínio e os adaptadores
+│   ├── usecases            // Casos de uso da aplicação (services)
+│   └── gateways            // Interfaces (ports) para comunicação entre o domínio e os adaptadores
 │
 ├── domain                  // Core/Domain Layer
-│   ├── entity              // Entidades do sistema
+│   ├── entities            // Entidades do sistema
 │   └── exception           // Exceções relacionadas ao domínio
-│   └── validator           // Notações personalizadas para validações
-│   └── valueObject         // Objetos de valor: Classes essenciais que não representam entidades de domínio.
+│   └── enums               // Enumeartions do projeto
 │
 ├── infrastructure          // Frameworks & Drivers Layer
-│   ├── config              // Configurações de frameworks, injeção de dependência, etc.
-│   └── util                // Classes utilitárias
+│   ├── settings            // Configurações dos Beans, injeção de dependência, etc.
+│   └── util                // Classes utilitárias (compartilhadas)
+│   	└── mappers           // Faz as conversões de DTO's, Entidades de banco e Entidades de domínios
+│
 ```
 
 ### ▶️ Como Rodar o Projeto
