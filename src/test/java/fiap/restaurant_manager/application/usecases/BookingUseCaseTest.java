@@ -4,6 +4,7 @@ import fiap.restaurant_manager.adapters.api.dto.*;
 import fiap.restaurant_manager.adapters.persistence.entities.BookingEntity;
 import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository;
 import fiap.restaurant_manager.application.gateways.BookingGateway;
+import fiap.restaurant_manager.application.gateways.RestaurantGateway;
 import fiap.restaurant_manager.domain.entities.Booking;
 import fiap.restaurant_manager.domain.enums.KitchenType;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
@@ -22,7 +23,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -149,7 +151,7 @@ public class BookingUseCaseTest {
 
         BookingDTO result = bookingUseCase.findBookingById(bookingId);
 
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
         Assertions.assertEquals(result, currentBooking);
     }
 
@@ -186,7 +188,7 @@ public class BookingUseCaseTest {
 
         Collection<BookingDTO> result = bookingUseCase.findAllBooking();
 
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
         Assertions.assertEquals(3, bookingList.size());
     }
 
@@ -202,7 +204,7 @@ public class BookingUseCaseTest {
     @Test
     void shouldCreateABooking_WhenQuantityThePeopleIsValid(){
         long bookingId = 1L;
-        long restaurantId = 2L;
+        long restaurantId = 1L;
         long userId = 1L;
 
         BookingEntity bookingEntity = new BookingEntity(bookingId,restaurantId,userId, LocalDateTime.now().plusDays(1),4, StatusBooking.CONFIRMED);
@@ -224,7 +226,7 @@ public class BookingUseCaseTest {
 
         BookingDTO result = bookingUseCase.createBooking(bookingDTO);
 
-        Assertions.assertNotNull(result);
+        assertNotNull(result);
         verify(bookingGateway, times(1)).save(bookingEntity);
     }
 
@@ -255,5 +257,67 @@ public class BookingUseCaseTest {
         );
 
         Assertions.assertEquals(("A capacidade máxima excedida do restaurante."), exception.getMessage());
+    }
+
+    @Test
+    void shouldUpdateBookingWhenIdIsFound() {
+        long bookingId = 1L;
+        long restaurantId = 2L;
+        long userId = 1L;
+
+        BookingDTO updatedBooking = new BookingDTO(bookingId,restaurantId,userId, LocalDateTime.now().plusDays(3),6, StatusBooking.CONFIRMED);
+        BookingDTO currentBooking = new BookingDTO(bookingId, restaurantId,userId, LocalDateTime.now().plusDays(1),4, StatusBooking.CONFIRMED);
+        BookingEntity updatedBookingEntity = new BookingEntity(bookingId,restaurantId,userId, LocalDateTime.now().plusDays(3),6, StatusBooking.CONFIRMED);
+        BookingEntity bookingEntity = new BookingEntity(bookingId,restaurantId,userId, LocalDateTime.now().plusDays(1),4, StatusBooking.CONFIRMED);
+        Booking booking = new Booking(restaurantId,userId, LocalDateTime.now().plusDays(1),4, StatusBooking.CONFIRMED);
+        Booking updatedBookingDomain = new Booking(restaurantId,userId, LocalDateTime.now().plusDays(3),6, StatusBooking.CONFIRMED);
+
+        AddressDTO addressDTO = mock(AddressDTO.class);
+        List<OperatingHoursDTO> operatingHoursDTO = Collections.singletonList(mock(OperatingHoursDTO.class));
+        RestaurantDTO restaurantDTO = new RestaurantDTO(
+                "Nonna Pizzaria", addressDTO, KitchenType.ITALIAN,"12345678906543", operatingHoursDTO, 20);
+
+        // Stubs corretos
+        when(bookingMapper.toBookingDomain((bookingUseCase.findBookingById(bookingId)))).thenReturn(booking); // Retorna o currentBooking
+        when(bookingMapper.toBookingDomain(any(BookingDTO.class))).thenReturn(booking); // Converte o currentBooking
+        when(restaurantUseCase.findRestaurantById(restaurantId)).thenReturn(restaurantDTO); // Retorna o restaurante
+        when(bookingMapper.toBookingEntity(any(Booking.class))).thenReturn(bookingEntity); // Converte qualquer Booking
+        when(bookingMapper.toBookingDTO(any(BookingEntity.class))).thenReturn(updatedBooking); // Converte qualquer BookingEntity
+        when(bookingGateway.save(any(BookingEntity.class))).thenReturn(updatedBookingEntity); // Salva qualquer BookingEntity
+
+        // Chamada do método
+        BookingDTO result = bookingUseCase.updateBooking(bookingId, updatedBooking);
+
+        // Validações
+        assertNotNull(result);
+        Assertions.assertEquals(updatedBooking.bookingDate(), result.bookingDate());
+        Assertions.assertEquals(updatedBooking.peopleQuantity(), result.peopleQuantity());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenCapacityExceeds() {
+        long bookingId = 1L;
+        long restaurantId = 2L;
+        long userId = 1L;
+        String date =  "2024-12-25T18:30:00";
+
+        BookingDTO updatedBookingDTO = new BookingDTO(bookingId,restaurantId,userId, LocalDateTime.parse(date),6, StatusBooking.CONFIRMED);
+        Booking mockUpdatedBookingDomain = new Booking(restaurantId,userId, LocalDateTime.parse(date), 6, StatusBooking.CONFIRMED);
+        BookingDTO currentBooking = new BookingDTO(bookingId, restaurantId,userId, LocalDateTime.now().plusDays(1),4, StatusBooking.CONFIRMED);
+
+        AddressDTO addressDTO = mock(AddressDTO.class);
+        List<OperatingHoursDTO> operatingHoursDTO = Collections.singletonList(mock(OperatingHoursDTO.class));
+        RestaurantDTO mockRestaurant = new RestaurantDTO(
+                "Nonna Pizzaria", addressDTO, KitchenType.ITALIAN,"12345678906543", operatingHoursDTO, 20);
+
+        when(bookingMapper.toBookingDomain(currentBooking)).thenReturn(mockUpdatedBookingDomain);
+        when(bookingUseCase.findBookingById(bookingId)).thenReturn(currentBooking);
+        when(restaurantUseCase.findRestaurantById(bookingId)).thenReturn(mockRestaurant);
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
+                bookingUseCase.updateBooking(bookingId, updatedBookingDTO)
+        );
+
+        Assertions.assertEquals("A capacidade máxima excedida do restaurante.", exception.getMessage());
     }
 }
