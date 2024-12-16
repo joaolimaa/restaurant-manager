@@ -11,7 +11,6 @@ import java.util.Collection;
 public class RestaurantGateway {
     private final RestaurantRepository restaurantRepository;
 
-
     public Collection<RestaurantEntity> findAll() {
         return restaurantRepository.findAll();
     }
@@ -21,7 +20,6 @@ public class RestaurantGateway {
     }
 
     public RestaurantEntity save(RestaurantEntity restaurantEntity) {
-
         return restaurantRepository.save(restaurantEntity);
     }
 

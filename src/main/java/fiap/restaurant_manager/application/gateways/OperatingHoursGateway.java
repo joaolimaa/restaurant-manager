@@ -11,7 +11,6 @@ public class OperatingHoursGateway {
 
     private final OperatingHoursRepository operatingHoursRepository;
 
-
     public OperatingHoursEntity findById(Long id){
         return operatingHoursRepository.findById(id).orElseThrow(() -> null);
     }

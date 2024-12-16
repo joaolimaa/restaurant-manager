@@ -11,7 +11,6 @@ public class RestaurantControllerMapper {
     private final AddressMapper mapperAdress;
 
     public Restaurant toRestaurantDomain(RestaurantDTO restaurant) {
-
         return new Restaurant(
                 restaurant.name(),
                 mapperAdress.toAddressDomain(restaurant.address()),

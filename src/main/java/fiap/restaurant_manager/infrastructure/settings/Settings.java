@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Settings {
-
-
     @Bean
     OperatingHoursMapper operatingHoursMapper(){
         return new OperatingHoursMapper();

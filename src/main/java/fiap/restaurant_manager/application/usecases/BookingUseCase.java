@@ -85,7 +85,7 @@ public class BookingUseCase {
     private static void validateStatus(BookingEntity booking) {
         try {
             ValidBookingStatus.valueOf(String.valueOf(booking.getStatus()));
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             throw new ExpectationFailedException("Valor diferente de CONFIRMADA ou CANCELADA.");
         }
     }

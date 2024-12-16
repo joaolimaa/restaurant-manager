@@ -4,9 +4,6 @@ import fiap.restaurant_manager.adapters.persistence.entities.AddressEntity;
 import fiap.restaurant_manager.application.gateways.AddressGateway;
 import lombok.AllArgsConstructor;
 
-import java.util.Collection;
-import java.util.Optional;
-
 @AllArgsConstructor
 public class AddressUseCase {
     private final AddressGateway addressGateway;
@@ -27,6 +24,4 @@ public class AddressUseCase {
     public void deleteAddress(Long id) {
         addressGateway.deleteById(id);
     }
-
-
 }

@@ -2,7 +2,6 @@ package fiap.restaurant_manager.domain.entities;
 
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 

@@ -5,9 +5,7 @@ import fiap.restaurant_manager.adapters.persistence.repository.BookingRepository
 import fiap.restaurant_manager.domain.exception.NotFoundException;
 import lombok.AllArgsConstructor;
 
-
 import java.util.Collection;
-
 
 @AllArgsConstructor
 public class BookingGateway {

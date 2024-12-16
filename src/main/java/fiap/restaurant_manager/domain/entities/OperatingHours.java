@@ -9,10 +9,7 @@ import java.time.ZonedDateTime;
 @Data
 @AllArgsConstructor
 public class OperatingHours {
-
     private DayOfWeek dayOfWeek;
-
     private ZonedDateTime startTime;
-
     private ZonedDateTime endTime;
 }

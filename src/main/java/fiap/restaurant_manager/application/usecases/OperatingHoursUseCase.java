@@ -4,9 +4,6 @@ import fiap.restaurant_manager.adapters.persistence.entities.OperatingHoursEntit
 import fiap.restaurant_manager.application.gateways.OperatingHoursGateway;
 import lombok.AllArgsConstructor;
 
-import java.util.Collection;
-import java.util.Optional;
-
 @AllArgsConstructor
 public class OperatingHoursUseCase {
     private final OperatingHoursGateway operatingHoursGateway;
@@ -27,6 +24,4 @@ public class OperatingHoursUseCase {
     public void deleteOperatingHours(Long id) {
         operatingHoursGateway.deleteById(id);
     }
-
-
 }
