@@ -15,7 +15,7 @@ public class Booking {
 
     public Booking(Long restaurantId, Long userId, LocalDateTime bookingDate, Integer peopleQuantity, StatusBooking status) {
 
-        realizaValidacoes(restaurantId, userId, bookingDate, peopleQuantity, status);
+        performsValidations(restaurantId, userId, bookingDate, peopleQuantity, status);
 
         this.restaurantId = restaurantId;
         this.userId = userId;
@@ -24,36 +24,36 @@ public class Booking {
         this.status = status;
     }
 
-    private void realizaValidacoes(Long restaurantId, Long userId, LocalDateTime bookingDate, Integer peopleQuantity, StatusBooking status) {
+    private void performsValidations(Long restaurantId, Long userId, LocalDateTime bookingDate, Integer peopleQuantity, StatusBooking status) {
         //Valida se restaurante esta vazio
-        validarestaurantIdReserva(restaurantId);
+        validateRestaurantBookingID(restaurantId);
 
         //Valida se usuario esta vazio
-        validauserIdReserva(userId);
+        validateUserIDBooking(userId);
 
         //Valida se a hora é valida
-        validabookingDateReserva(bookingDate);
+        validateBookingDate(bookingDate);
 
         //Realiza a validação da quantidade de pessoas
-        validapeopleQuantityReserva(peopleQuantity);
+        validateQuantityOfPeopleBooking(peopleQuantity);
 
         //Valida se o status é válido
-        validaStatusReserva(String.valueOf(status));
+        validateBookingStatus(String.valueOf(status));
     }
 
-    private void validarestaurantIdReserva(Long restaurantId) {
+    private void validateRestaurantBookingID(Long restaurantId) {
         if (restaurantId == null || restaurantId <= 0) {
             throw new IllegalArgumentException("O ID do restaurante deve ser um número válido e maior que zero.");
         }
     }
 
-    private void validauserIdReserva(Long userId) {
+    private void validateUserIDBooking(Long userId) {
         if (userId == null || userId <= 0) {
             throw new IllegalArgumentException("O ID do usuário deve ser um número válido e maior que zero.");
         }
     }
 
-    private void validaStatusReserva(String status) {
+    private void validateBookingStatus(String status) {
         if (status == null || status.isBlank()) {
             throw new IllegalArgumentException("O status não pode ser nulo.");
         }
@@ -65,13 +65,13 @@ public class Booking {
         }
     }
 
-    private void validapeopleQuantityReserva(Integer peopleQuantity) {
+    private void validateQuantityOfPeopleBooking(Integer peopleQuantity) {
         if (peopleQuantity < 0) {
             throw new IllegalArgumentException("A quantidade de pessoa tem que ser maior que 0, para realizar a reserva.");
         }
     }
 
-    private void validabookingDateReserva(LocalDateTime bookingDate) {
+    private void validateBookingDate(LocalDateTime bookingDate) {
         if (bookingDate == null) {
             throw new IllegalArgumentException("A data e hora da reserva não podem ser nulas.");
         }
@@ -80,5 +80,4 @@ public class Booking {
             throw new IllegalArgumentException("A data e hora da reserva devem ser no futuro.");
         }
     }
-
 }
