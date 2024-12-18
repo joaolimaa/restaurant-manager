@@ -107,8 +107,7 @@ src/main/java/fiap/restaurant_manager/
 ```bash
 docker-compose up -d
 ```
-
-Após a execução, a aplicação estará disponível em http://localhost:8080
+Configure os dados corretos do banco no arquivo application.properties, após a execução, a aplicação estará disponível em http://localhost:8080
 
 A documentação da API está disponível no Swagger, que pode ser acessada em: 
 
