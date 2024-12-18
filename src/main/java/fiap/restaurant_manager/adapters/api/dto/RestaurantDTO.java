@@ -1,11 +1,12 @@
 package fiap.restaurant_manager.adapters.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fiap.restaurant_manager.domain.enums.KitchenType;
 import org.springframework.data.annotation.ReadOnlyProperty;
 
 import java.time.LocalTime;
 
-public record RestaurantDTO(@ReadOnlyProperty Long id,
+public record RestaurantDTO(@JsonIgnore @ReadOnlyProperty Long id,
                             String name,
                             String postalCode,
                             String street,
