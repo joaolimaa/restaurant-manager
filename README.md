@@ -42,7 +42,7 @@ O objetivo do projeto é a criação de um sistema completo de **Reserva e Avali
 3. **Testes de Integração no Controller, CI e BDD**  
    - Os **controllers** foram amplamente testados para validar a lógica de negócios.  
    - Implementamos um pipeline de **CI/CD**, onde os testes são automaticamente executados em cada alteração do código.  
-   - Adotamos **BDD (Behavior-Driven Development)** para melhorar a comunicação entre equipe e stakeholders, descrevendo cenários em linguagem acessível.
+   - Adotamos **BDD (Behavior-Driven Development)** utilizando o Cucumber para melhorar a comunicação entre equipe e stakeholders, descrevendo cenários em linguagem acessível.
 
 4. **Testes Não Funcionais**  
    - Foram realizados **testes de carga e desempenho** para garantir que o sistema suporte altas demandas de usuários simultâneos e volume de reservas sem comprometer a eficiência.
@@ -107,8 +107,7 @@ src/main/java/fiap/restaurant_manager/
 ```bash
 docker-compose up -d
 ```
-
-Após a execução, a aplicação estará disponível em http://localhost:8080
+Configure os dados corretos do banco no arquivo application.properties, após a execução, a aplicação estará disponível em http://localhost:8080
 
 A documentação da API está disponível no Swagger, que pode ser acessada em: 
 
