@@ -15,19 +15,13 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Table(name = "booking")
 public class BookingEntity {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private Long restaurantId;
-
     private Long userId;
-
     private LocalDateTime bookingDate;
-
     private Integer peopleQuantity;
-
     private StatusBooking status;
 
     public BookingEntity(Long restaurantId, Long userId, LocalDateTime bookingDate, Integer peopleQuantity, StatusBooking status) {

@@ -1,12 +1,24 @@
 package fiap.restaurant_manager.adapters.api.dto;
 
 import fiap.restaurant_manager.domain.enums.KitchenType;
+import org.springframework.data.annotation.ReadOnlyProperty;
 
-import java.util.List;
+import java.time.LocalTime;
 
-public record RestaurantDTO(String name,
-                            AddressDTO address,
+public record RestaurantDTO(@ReadOnlyProperty Long id,
+                            String name,
+                            String postalCode,
+                            String street,
+                            String number,
                             KitchenType kitchenType,
                             String cnpj,
-                            List<OperatingHoursDTO> operatingHoursDTO,
-                            int capacity) {}
+                            int capacity,
+                            LocalTime initialTime,
+                            LocalTime finalTime) {
+
+    public RestaurantDTO(String name, String postalCode, String street, String number,
+                         KitchenType kitchenType, String cnpj, int capacity,
+                         LocalTime initialTime, LocalTime finalTime) {
+        this(null, name, postalCode, street, number, kitchenType, cnpj, capacity, initialTime, finalTime);
+    }
+}

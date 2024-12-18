@@ -17,11 +17,9 @@ import java.util.Collection;
 
 @AllArgsConstructor
 public class BookingUseCase {
-
     private final BookingGateway bookingGateway;
     private final BookingControllerMapper mapper;
     private final RestaurantUseCase restaurantUseCase;
-    private final UserUseCase userUseCase;
 
     public BookingDTO findBookingById(Long id) {
         return mapper.toBookingDTO(bookingGateway.findById(id));
@@ -32,46 +30,31 @@ public class BookingUseCase {
     }
 
     public BookingDTO createBooking(BookingDTO booking) {
-
         val bookingDomain = mapper.toBookingDomain(booking);
         val bookingEntity = mapper.toBookingEntity(bookingDomain);
-
         val restaurant = restaurantUseCase.findRestaurantById(bookingEntity.getRestaurantId());
-        val user = userUseCase.findUserById(bookingEntity.getUserId());
-
         validCapacityRestaurant(bookingDomain, restaurant);
-
         return mapper.toBookingDTO(bookingGateway.save(bookingEntity));
     }
 
     public BookingDTO updateBooking(Long id, BookingDTO booking) {
-
         val bookingDomain = mapper.toBookingDomain(findBookingById(id));
         val bookingDomainNew = mapper.toBookingDomain(booking);
-
-        bookingDomain.setBookingDate(bookingDomainNew.getBookingDate());
-
         val restaurant = restaurantUseCase.findRestaurantById(bookingDomain.getRestaurantId());
-
+        bookingDomain.setBookingDate(bookingDomainNew.getBookingDate());
         validCapacityRestaurant(bookingDomainNew, restaurant);
-
         bookingDomain.setPeopleQuantity(bookingDomainNew.getPeopleQuantity());
-
         return mapper.toBookingDTO(bookingGateway.save(mapper.toBookingEntity(bookingDomain)));
     }
 
     public BookingDTO updateStatus(Long id, StatusBooking statusBooking) {
         val bookingDomain = mapper.toBookingDomain(findBookingById(id));
-        StatusBooking currentStatusBooking = bookingDomain.getStatus();
-
         val bookingEntity = mapper.toBookingEntity(bookingDomain);
+        val currentStatusBooking = bookingDomain.getStatus();
 
         if (currentStatusBooking.equals(StatusBooking.CONFIRMED) || currentStatusBooking.equals(StatusBooking.PENDING)) {
-
             bookingEntity.setStatus(statusBooking);
-
             validateStatus(bookingEntity);
-
             return mapper.toBookingDTO(bookingGateway.save(bookingEntity));
         }
 
@@ -95,5 +78,4 @@ public class BookingUseCase {
             throw new IllegalArgumentException("A capacidade máxima excedida do restaurante.");
         }
     }
-
 }

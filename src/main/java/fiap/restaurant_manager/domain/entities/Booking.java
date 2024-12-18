@@ -14,9 +14,7 @@ public class Booking {
     private StatusBooking status;
 
     public Booking(Long restaurantId, Long userId, LocalDateTime bookingDate, Integer peopleQuantity, StatusBooking status) {
-
         performsValidations(restaurantId, userId, bookingDate, peopleQuantity, status);
-
         this.restaurantId = restaurantId;
         this.userId = userId;
         this.bookingDate = bookingDate;

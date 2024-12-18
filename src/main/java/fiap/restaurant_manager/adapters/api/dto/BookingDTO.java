@@ -1,6 +1,5 @@
 package fiap.restaurant_manager.adapters.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import org.springframework.data.annotation.ReadOnlyProperty;
 
@@ -11,4 +10,10 @@ public record BookingDTO(@ReadOnlyProperty Long id,
                          Long userId,
                          LocalDateTime bookingDate,
                          Integer peopleQuantity,
-                         StatusBooking status) {}
+                         StatusBooking status) {
+
+    public BookingDTO(Long restaurantId, Long userId, LocalDateTime bookingDate,
+                      Integer peopleQuantity, StatusBooking status) {
+        this(null, restaurantId, userId, bookingDate, peopleQuantity, status);
+    }
+}

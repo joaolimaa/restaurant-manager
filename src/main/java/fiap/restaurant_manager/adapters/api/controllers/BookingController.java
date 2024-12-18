@@ -23,7 +23,6 @@ import java.util.Collection;
 public class BookingController {
     private final BookingUseCase bookingUseCase;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<BookingDTO> findBookingById(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.OK).body(bookingUseCase.findBookingById(id));
@@ -62,5 +61,4 @@ public class BookingController {
         bookingUseCase.deleteBooking(id);
         return ResponseEntity.noContent().build();
     }
-
 }

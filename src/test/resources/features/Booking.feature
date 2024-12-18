@@ -1,9 +1,9 @@
 Feature: Manage Booking Operations
 
 Scenario: Create a new booking
-  Given the following user name: "Felipe", email: "fefe@email.com", cpf: "893.996.750-09" and the restaurant
-    | name      | postalCode  | city        | state         | neighborhood        | street        | number  | kitchenType | cnpj                  | capacity | operatingHours      |
-    | Test Cafe | 12345       | Test City   | Test State    | Test Neighborhood   | Main Street   | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | MONDAY, 08:00-18:00 |
+ Given the following user name: "Felipe", email: "fefe@email.com", cpf: "893.996.750-09" and the restaurant
+    | name      | postalCode  | street        | number  | kitchenType | cnpj                  | capacity | initialTime | finalTime |
+    | Test Cafe | 12345       | Rua SÃO PAULO | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | 08:00:00    | 18:00:00  |
   When I send a POST request to "/v1/api/reserva" with the payload
     | restaurantId   | 1                    |
     | userId         | 1                    |
@@ -15,8 +15,8 @@ Scenario: Create a new booking
 
   Scenario: Retrieve a booking by ID
   Given the following user name: "Felipe", email: "fefe@email.com", cpf: "893.996.750-09" and the restaurant
-    | name      | postalCode  | city        | state         | neighborhood        | street        | number  | kitchenType | cnpj                  | capacity | operatingHours      |
-    | Test Cafe | 12345       | Test City   | Test State    | Test Neighborhood   | Main Street   | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | MONDAY, 08:00-18:00 |
+    | name      | postalCode  | street        | number  | kitchenType | cnpj                  | capacity | initialTime | finalTime |
+    | Test Cafe | 12345       | Rua SÃO PAULO | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | 08:00:00    | 18:00:00  |
   When I send a POST request to "/v1/api/reserva" with the payload
     | restaurantId   | 1                    |
     | userId         | 1                    |
@@ -30,9 +30,9 @@ Scenario: Create a new booking
   And the response body should contain the booking details
 
   Scenario: Delete a booking
-    Given the following user name: "Felipe", email: "fefe@email.com", cpf: "893.996.750-09" and the restaurant
-      | name      | postalCode  | city        | state         | neighborhood        | street        | number  | kitchenType | cnpj                  | capacity | operatingHours      |
-      | Test Cafe | 12345       | Test City   | Test State    | Test Neighborhood   | Main Street   | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | MONDAY, 08:00-18:00 |
+  Given the following user name: "Felipe", email: "fefe@email.com", cpf: "893.996.750-09" and the restaurant
+      | name      | postalCode  | street        | number  | kitchenType | cnpj                  | capacity | initialTime | finalTime |
+      | Test Cafe | 12345       | Rua SÃO PAULO | 123     | ITALIAN     | 12.345.678/0001-00    | 50       | 08:00:00    | 18:00:00  |
     When I send a POST request to "/v1/api/reserva" with the payload
       | restaurantId   | 1                    |
       | userId         | 1                    |

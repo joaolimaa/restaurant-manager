@@ -1,13 +1,11 @@
 package fiap.restaurant_manager.cucumber.steps;
 
-import static fiap.restaurant_manager.cucumber.helper.StepsHelper.*;
 import static fiap.restaurant_manager.cucumber.helper.StepsHelper.getRestaurantDto;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import fiap.restaurant_manager.adapters.api.dto.*;
-import fiap.restaurant_manager.domain.enums.KitchenType;
 import fiap.restaurant_manager.domain.enums.StatusBooking;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -55,11 +53,7 @@ public class BookingSteps {
 
         final List<List<String>> rows = dataTable.asLists(String.class);
         final List<String> details = rows.get(1);
-        final AddressDTO address = buildAddress(details);
-        final KitchenType kitchenType = parseKitchenType(details.get(7));
-        final OperatingHoursDTO operatingHour = buildOperatingHours(details.get(10));
-
-        final RestaurantDTO restaurantDTO = getRestaurantDto(details, address, kitchenType, operatingHour);
+        final RestaurantDTO restaurantDTO = getRestaurantDto(details);
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Content-Type", "application/json");

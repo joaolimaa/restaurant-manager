@@ -2,6 +2,8 @@ package fiap.restaurant_manager.domain.entities;
 
 import lombok.Data;
 
+import static fiap.restaurant_manager.infrastructure.util.formatters.formatCPF;
+
 @Data
 public class User {
     private String name;
@@ -9,22 +11,35 @@ public class User {
     private String cpf;
 
     public User(String name, String email, String cpf) {
-
-        validateCpf(cpf);
-
-        this.name = name;
-        this.email = email;
-        this.cpf = cpf;
+        this.name = validateName(name);
+        this.email = validateEmail(email);
+        this.cpf = validateCpf(cpf);
     }
 
-    private void validateCpf(String cpf) {
-        if (cpf == null || !cpf.matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) {
-            throw new IllegalArgumentException("Cpf no padrão incorreto!");
+    private String validateName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Nome é obrigatório e não pode estar vazio.");
         }
+        return name.trim();
+    }
+
+    private String validateEmail(String email) {
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("E-mail é obrigatório e não pode estar vazio.");
+        }
+        if (!email.matches("^[\\w._%+-]+@[\\w.-]+\\.[a-zA-Z]{2,}$")) {
+            throw new IllegalArgumentException("E-mail no padrão incorreto!");
+        }
+        return email.trim();
+    }
+
+    private String validateCpf(String cpf) {
+        if (cpf == null || cpf.trim().isEmpty()) {
+            throw new IllegalArgumentException("CPF é obrigatório e não pode estar vazio.");
+        }
+        if (!cpf.matches("\\d{11}")) {
+            throw new IllegalArgumentException("CPF no padrão incorreto! Deve conter exatamente 11 dígitos numéricos.");
+        }
+        return formatCPF(cpf);
     }
 }
-
-
-
-
-

@@ -1,7 +1,5 @@
 package fiap.restaurant_manager.cucumber.steps;
 
-import fiap.restaurant_manager.adapters.api.dto.AddressDTO;
-import fiap.restaurant_manager.adapters.api.dto.OperatingHoursDTO;
 import fiap.restaurant_manager.adapters.api.dto.RestaurantDTO;
 import fiap.restaurant_manager.adapters.api.dto.UserDTO;
 import fiap.restaurant_manager.domain.enums.KitchenType;
@@ -12,6 +10,7 @@ import io.cucumber.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 
+import java.time.LocalTime;
 import java.util.List;
 
 import static fiap.restaurant_manager.cucumber.helper.StepsHelper.*;
@@ -20,11 +19,8 @@ import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 
-import java.time.DayOfWeek;
-import java.time.ZonedDateTime;
 import java.util.Map;
 
 import org.springframework.http.*;
@@ -45,11 +41,7 @@ public class RestaurantSteps {
     public void i_have_valid_restaurant_details(io.cucumber.datatable.DataTable dataTable) {
         final List<List<String>> rows = dataTable.asLists(String.class);
         final List<String> details = rows.get(1);
-        final AddressDTO address = buildAddress(details);
-        final KitchenType kitchenType = parseKitchenType(details.get(7));
-        final OperatingHoursDTO operatingHour = buildOperatingHours(details.get(10));
-
-        restaurantDTO = getRestaurantDto(details, address, kitchenType, operatingHour);
+        restaurantDTO = getRestaurantDto(details);
     }
 
     @When("I send a POST request to {string} with the restaurant details")
@@ -77,12 +69,14 @@ public class RestaurantSteps {
     @Then("I should see the newly created restaurant details")
     public void i_should_see_the_newly_created_restaurant_details() {
         assertThat(createdRestaurant.name(), equalTo(restaurantDTO.name()));
-        assertThat(createdRestaurant.address().postalCode(), equalTo(restaurantDTO.address().postalCode()));
-        assertThat(createdRestaurant.address().city(), equalTo(restaurantDTO.address().city()));
+        assertThat(createdRestaurant.postalCode(), equalTo(restaurantDTO.postalCode()));
+        assertThat(createdRestaurant.street(), equalTo(restaurantDTO.street()));
+        assertThat(createdRestaurant.number(), equalTo(restaurantDTO.number()));
         assertThat(createdRestaurant.kitchenType(), equalTo(restaurantDTO.kitchenType()));
         assertThat(createdRestaurant.cnpj(), equalTo(restaurantDTO.cnpj()));
-        assertThat(createdRestaurant.operatingHoursDTO().get(0).dayOfWeek(), equalTo(restaurantDTO.operatingHoursDTO().get(0).dayOfWeek()));
         assertThat(createdRestaurant.capacity(), equalTo(restaurantDTO.capacity()));
+        assertThat(createdRestaurant.initialTime(), equalTo(restaurantDTO.initialTime()));
+        assertThat(createdRestaurant.finalTime(), equalTo(restaurantDTO.finalTime()));
     }
 
     @Given("the restaurant with ID {int} exists in the system")
@@ -117,16 +111,13 @@ public class RestaurantSteps {
 
         // Validate each field against the expected details
         assertEquals(expectedDetails.get("name"), restaurantFromGetList.name());
-        assertEquals(expectedDetails.get("postalCode"), restaurantFromGetList.address().postalCode());
-        assertEquals(expectedDetails.get("city"), restaurantFromGetList.address().city());
-        assertEquals(expectedDetails.get("state"), restaurantFromGetList.address().state());
-        assertEquals(expectedDetails.get("neighborhood"), restaurantFromGetList.address().neighborhood());
-        assertEquals(expectedDetails.get("street"), restaurantFromGetList.address().street());
-        assertEquals(expectedDetails.get("number"), restaurantFromGetList.address().number());
+        assertEquals(expectedDetails.get("postalCode"), restaurantFromGetList.postalCode());
+        assertEquals(expectedDetails.get("street"), restaurantFromGetList.street());
+        assertEquals(expectedDetails.get("number"), restaurantFromGetList.number());
         assertEquals(expectedDetails.get("kitchenType"), restaurantFromGetList.kitchenType().name());
         assertEquals(expectedDetails.get("cnpj"), restaurantFromGetList.cnpj());
         assertEquals(Integer.parseInt(expectedDetails.get("capacity")), restaurantFromGetList.capacity());
-        
+
         // Validate operating hours
         //        List<OperatingHoursDTO> operatingHours = restaurantFromGetList.operatingHoursDTO();
         //        assertFalse(operatingHours.isEmpty());
@@ -145,27 +136,16 @@ public class RestaurantSteps {
         List<Map<String, String>> rows = dataTable.asMaps(String.class, String.class);
         Map<String, String> updatedDetails = rows.get(0);
 
-        // Prepare updated RestaurantDTO object
-        AddressDTO address = new AddressDTO(
-                "45678", // Postal code can be mocked for the new address
-                "Updated City",
-                "Updated State",
-                "Updated Neighborhood",
-                updatedDetails.get("address"),
-                "789" // New mock number
-        );
-
         updatedRestaurant = new RestaurantDTO(
-                updatedDetails.get("name"), // Updated name
-                address,
-                KitchenType.ITALIAN, // Assume KitchenType remains the same
-                "12.345.678/0001-01", // Updated mock CNPJ
-                List.of(new OperatingHoursDTO(
-                        DayOfWeek.FRIDAY,
-                        ZonedDateTime.now(),
-                        ZonedDateTime.now().plusHours(4)
-                )),
-                100 // Updated capacity
+                updatedDetails.get("name"),
+                "74375490",
+                "Rua teste",
+                "numero 487",
+                KitchenType.ITALIAN,
+                "12.345.678/0001-01",
+                100,
+                LocalTime.parse("08:10:00"),
+                LocalTime.parse("18:10:00")
         );
     }
 
@@ -191,21 +171,16 @@ public class RestaurantSteps {
 
         // Field-by-field assertions using assertEquals
         assertEquals(updatedRestaurant.name(), returnedRestaurant.name());
-        assertEquals(updatedRestaurant.address().street(), returnedRestaurant.address().street());
-        assertEquals(updatedRestaurant.address().city(), returnedRestaurant.address().city());
-        assertEquals(updatedRestaurant.address().state(), returnedRestaurant.address().state());
+        assertEquals(updatedRestaurant.postalCode(), returnedRestaurant.postalCode());
+        assertEquals(updatedRestaurant.street(), returnedRestaurant.street());
+        assertEquals(updatedRestaurant.number(), returnedRestaurant.number());
         assertEquals(updatedRestaurant.capacity(), returnedRestaurant.capacity());
         assertEquals(updatedRestaurant.kitchenType(), returnedRestaurant.kitchenType());
         assertEquals(updatedRestaurant.cnpj(), returnedRestaurant.cnpj());
 
-        // Validate operating hours
-        assertEquals(1, returnedRestaurant.operatingHoursDTO().size()); // Ensure there's one operating hour
-        assertEquals(updatedRestaurant.operatingHoursDTO().get(0).dayOfWeek(),
-                returnedRestaurant.operatingHoursDTO().get(0).dayOfWeek());
-        assertEquals(updatedRestaurant.operatingHoursDTO().get(0).startTime(),
-                returnedRestaurant.operatingHoursDTO().get(0).startTime());
-        assertEquals(updatedRestaurant.operatingHoursDTO().get(0).endTime(),
-                returnedRestaurant.operatingHoursDTO().get(0).endTime());
+        // Validate datetime
+        assertEquals(updatedRestaurant.initialTime(), returnedRestaurant.initialTime());
+        assertEquals(updatedRestaurant.finalTime(), returnedRestaurant.finalTime());
     }
 
     @And("the restaurant with ID {int} should no longer exist in the system, and should retrieve {int}")

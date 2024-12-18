@@ -7,38 +7,45 @@ import lombok.AllArgsConstructor;
 
 @AllArgsConstructor
 public class RestaurantControllerMapper {
-    private final OperatingHoursMapper mapperOperatingHour;
-    private final AddressMapper mapperAdress;
-
     public Restaurant toRestaurantDomain(RestaurantDTO restaurant) {
         return new Restaurant(
                 restaurant.name(),
-                mapperAdress.toAddressDomain(restaurant.address()),
+                restaurant.postalCode(),
+                restaurant.street(),
+                restaurant.number(),
                 restaurant.kitchenType(),
                 restaurant.cnpj(),
-                restaurant.operatingHoursDTO().stream().map(mapperOperatingHour::toOperatingHoursDomain).toList(),
-                restaurant.capacity());
+                restaurant.capacity(),
+                restaurant.initialTime(),
+                restaurant.finalTime());
     }
 
     public RestaurantEntity toRestaurantEntity(Restaurant restaurant) {
         return new RestaurantEntity(
                 restaurant.getName(),
-                mapperAdress.toAddressEntity(restaurant.getAddress()),
+                restaurant.getPostalCode(),
+                restaurant.getStreet(),
+                restaurant.getNumber(),
                 restaurant.getKitchenType(),
                 restaurant.getCnpj(),
-                restaurant.getOperatingHours().stream().map(mapperOperatingHour::toOperatingHoursEntity).toList(),
-                restaurant.getCapacity()
+                restaurant.getCapacity(),
+                restaurant.getInitialTime(),
+                restaurant.getFinalTime()
         );
     }
 
     public RestaurantDTO toRestaurantDTO(RestaurantEntity restaurant) {
         return new RestaurantDTO(
+                restaurant.getId(),
                 restaurant.getName(),
-                mapperAdress.toAddressDTO(restaurant.getAddress()),
+                restaurant.getPostalCode(),
+                restaurant.getStreet(),
+                restaurant.getNumber(),
                 restaurant.getKitchenType(),
                 restaurant.getCnpj(),
-                restaurant.getOperatingHours().stream().map(mapperOperatingHour::toOperatingHoursDTO).toList(),
-                restaurant.getCapacity()
+                restaurant.getCapacity(),
+                restaurant.getInitialTime(),
+                restaurant.getFinalTime()
         );
     }
 }
