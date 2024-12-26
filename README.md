@@ -117,10 +117,10 @@ http://localhost:8080/swagger-ui/index.html
 
 Link da aplicação na Azure:
 
-https://restaurant-manager-hnhydph8fufcdagp.brazilsouth-01.azurewebsites.net/swagger-ui/index.html
+https://restaurant-manager-app-c5f9bha8c8gahjc8.brazilsouth-01.azurewebsites.net/swagger-ui/index.html
 
 Link da aplicação na Render:
 
-https://rm-render-candidate-release2.onrender.com/swagger-ui/index.html
+https://rm-render-ga-release.onrender.com/swagger-ui/index.html
 
 Obs.: O pacote de serviço Free do Render desativa o Web Service por inatividade. Portanto, ao tentar acessar o link acima, após a primeira tentativa, aguardar alguns minutos para que a aplicação suba novamente.
