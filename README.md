@@ -89,7 +89,7 @@ src/main/java/fiap/restaurant_manager/
 │   ├── settings            // Configurações dos Beans, injeção de dependência, etc.
 │   └── util                // Classes utilitárias (compartilhadas)
 │   	└── mappers           // Faz as conversões de DTO's, Entidades de banco e Entidades de domínios
-│
+
 ```
 
 ### ▶️ Como Rodar o Projeto
